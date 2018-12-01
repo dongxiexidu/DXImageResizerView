@@ -1,0 +1,409 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		1115A36A21AE6A04009848A3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1115A36921AE6A04009848A3 /* AppDelegate.swift */; };
+		1115A36C21AE6A04009848A3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1115A36B21AE6A04009848A3 /* ViewController.swift */; };
+		1115A36F21AE6A04009848A3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1115A36D21AE6A04009848A3 /* Main.storyboard */; };
+		1115A37121AE6A06009848A3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1115A37021AE6A06009848A3 /* Assets.xcassets */; };
+		1115A37421AE6A06009848A3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1115A37221AE6A06009848A3 /* LaunchScreen.storyboard */; };
+		1115A37D21AE6B48009848A3 /* DXImageResizerConfigure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1115A37C21AE6B48009848A3 /* DXImageResizerConfigure.swift */; };
+		1115A37F21AE83E6009848A3 /* DXImageResizerFrameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1115A37E21AE83E6009848A3 /* DXImageResizerFrameView.swift */; };
+		1115A38121AF8B68009848A3 /* DXImageResizerFrameView+Pan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1115A38021AF8B68009848A3 /* DXImageResizerFrameView+Pan.swift */; };
+		1115A38321AF8CFC009848A3 /* DXImageResizerFrameView+Getter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1115A38221AF8CFC009848A3 /* DXImageResizerFrameView+Getter.swift */; };
+		1115A49721B0E6B8009848A3 /* DXImageResizerFrameView+PublicMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1115A49621B0E6B8009848A3 /* DXImageResizerFrameView+PublicMethod.swift */; };
+		1115A49921B1126D009848A3 /* UIImage+Orientation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1115A49821B1126D009848A3 /* UIImage+Orientation.swift */; };
+		1115A49B21B23F50009848A3 /* DXImageResizerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1115A49A21B23F50009848A3 /* DXImageResizerView.swift */; };
+		1115A49D21B27F02009848A3 /* DXImageResizerView+PublicMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1115A49C21B27F02009848A3 /* DXImageResizerView+PublicMethod.swift */; };
+		1115A4A121B28CAE009848A3 /* Kobe.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1115A49E21B28CAE009848A3 /* Kobe.jpg */; };
+		1115A4A221B28CAE009848A3 /* Girl.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1115A49F21B28CAE009848A3 /* Girl.jpg */; };
+		1115A4A321B28CAE009848A3 /* Lotus.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1115A4A021B28CAE009848A3 /* Lotus.jpg */; };
+		1115A4A521B28EBD009848A3 /* TDXableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1115A4A421B28EBD009848A3 /* TDXableViewController.swift */; };
+		1115A4A721B28F15009848A3 /* DXCropImageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1115A4A621B28F15009848A3 /* DXCropImageController.swift */; };
+		1115A4A921B28F36009848A3 /* DXImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1115A4A821B28F36009848A3 /* DXImageViewController.swift */; };
+		1115A4AB21B29507009848A3 /* ConfigureModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1115A4AA21B29507009848A3 /* ConfigureModel.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		1115A36621AE6A04009848A3 /* DXImageResizerView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DXImageResizerView.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1115A36921AE6A04009848A3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		1115A36B21AE6A04009848A3 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		1115A36E21AE6A04009848A3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		1115A37021AE6A06009848A3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		1115A37321AE6A06009848A3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		1115A37521AE6A06009848A3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1115A37C21AE6B48009848A3 /* DXImageResizerConfigure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DXImageResizerConfigure.swift; sourceTree = "<group>"; };
+		1115A37E21AE83E6009848A3 /* DXImageResizerFrameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DXImageResizerFrameView.swift; sourceTree = "<group>"; };
+		1115A38021AF8B68009848A3 /* DXImageResizerFrameView+Pan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DXImageResizerFrameView+Pan.swift"; sourceTree = "<group>"; };
+		1115A38221AF8CFC009848A3 /* DXImageResizerFrameView+Getter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DXImageResizerFrameView+Getter.swift"; sourceTree = "<group>"; };
+		1115A49621B0E6B8009848A3 /* DXImageResizerFrameView+PublicMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DXImageResizerFrameView+PublicMethod.swift"; sourceTree = "<group>"; };
+		1115A49821B1126D009848A3 /* UIImage+Orientation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Orientation.swift"; sourceTree = "<group>"; };
+		1115A49A21B23F50009848A3 /* DXImageResizerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DXImageResizerView.swift; sourceTree = "<group>"; };
+		1115A49C21B27F02009848A3 /* DXImageResizerView+PublicMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DXImageResizerView+PublicMethod.swift"; sourceTree = "<group>"; };
+		1115A49E21B28CAE009848A3 /* Kobe.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Kobe.jpg; sourceTree = "<group>"; };
+		1115A49F21B28CAE009848A3 /* Girl.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Girl.jpg; sourceTree = "<group>"; };
+		1115A4A021B28CAE009848A3 /* Lotus.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Lotus.jpg; sourceTree = "<group>"; };
+		1115A4A421B28EBD009848A3 /* TDXableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TDXableViewController.swift; sourceTree = "<group>"; };
+		1115A4A621B28F15009848A3 /* DXCropImageController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DXCropImageController.swift; sourceTree = "<group>"; };
+		1115A4A821B28F36009848A3 /* DXImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DXImageViewController.swift; sourceTree = "<group>"; };
+		1115A4AA21B29507009848A3 /* ConfigureModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigureModel.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		1115A36321AE6A04009848A3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		1115A35D21AE6A04009848A3 = {
+			isa = PBXGroup;
+			children = (
+				1115A36821AE6A04009848A3 /* DXImageResizerView */,
+				1115A36721AE6A04009848A3 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		1115A36721AE6A04009848A3 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1115A36621AE6A04009848A3 /* DXImageResizerView.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		1115A36821AE6A04009848A3 /* DXImageResizerView */ = {
+			isa = PBXGroup;
+			children = (
+				1115A37B21AE6A19009848A3 /* Source */,
+				1115A36921AE6A04009848A3 /* AppDelegate.swift */,
+				1115A36B21AE6A04009848A3 /* ViewController.swift */,
+				1115A4AA21B29507009848A3 /* ConfigureModel.swift */,
+				1115A4A421B28EBD009848A3 /* TDXableViewController.swift */,
+				1115A4A621B28F15009848A3 /* DXCropImageController.swift */,
+				1115A4A821B28F36009848A3 /* DXImageViewController.swift */,
+				1115A36D21AE6A04009848A3 /* Main.storyboard */,
+				1115A37021AE6A06009848A3 /* Assets.xcassets */,
+				1115A49F21B28CAE009848A3 /* Girl.jpg */,
+				1115A49E21B28CAE009848A3 /* Kobe.jpg */,
+				1115A4A021B28CAE009848A3 /* Lotus.jpg */,
+				1115A37221AE6A06009848A3 /* LaunchScreen.storyboard */,
+				1115A37521AE6A06009848A3 /* Info.plist */,
+			);
+			path = DXImageResizerView;
+			sourceTree = "<group>";
+		};
+		1115A37B21AE6A19009848A3 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				1115A37C21AE6B48009848A3 /* DXImageResizerConfigure.swift */,
+				1115A37E21AE83E6009848A3 /* DXImageResizerFrameView.swift */,
+				1115A49621B0E6B8009848A3 /* DXImageResizerFrameView+PublicMethod.swift */,
+				1115A38021AF8B68009848A3 /* DXImageResizerFrameView+Pan.swift */,
+				1115A38221AF8CFC009848A3 /* DXImageResizerFrameView+Getter.swift */,
+				1115A49821B1126D009848A3 /* UIImage+Orientation.swift */,
+				1115A49A21B23F50009848A3 /* DXImageResizerView.swift */,
+				1115A49C21B27F02009848A3 /* DXImageResizerView+PublicMethod.swift */,
+			);
+			path = Source;
+			sourceTree = SOURCE_ROOT;
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		1115A36521AE6A04009848A3 /* DXImageResizerView */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1115A37821AE6A06009848A3 /* Build configuration list for PBXNativeTarget "DXImageResizerView" */;
+			buildPhases = (
+				1115A36221AE6A04009848A3 /* Sources */,
+				1115A36321AE6A04009848A3 /* Frameworks */,
+				1115A36421AE6A04009848A3 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = DXImageResizerView;
+			productName = DXImageResizerView;
+			productReference = 1115A36621AE6A04009848A3 /* DXImageResizerView.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		1115A35E21AE6A04009848A3 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1000;
+				LastUpgradeCheck = 1000;
+				ORGANIZATIONNAME = shangZhu;
+				TargetAttributes = {
+					1115A36521AE6A04009848A3 = {
+						CreatedOnToolsVersion = 10.0;
+					};
+				};
+			};
+			buildConfigurationList = 1115A36121AE6A04009848A3 /* Build configuration list for PBXProject "DXImageResizerView" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 1115A35D21AE6A04009848A3;
+			productRefGroup = 1115A36721AE6A04009848A3 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				1115A36521AE6A04009848A3 /* DXImageResizerView */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		1115A36421AE6A04009848A3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1115A4A121B28CAE009848A3 /* Kobe.jpg in Resources */,
+				1115A37421AE6A06009848A3 /* LaunchScreen.storyboard in Resources */,
+				1115A4A221B28CAE009848A3 /* Girl.jpg in Resources */,
+				1115A37121AE6A06009848A3 /* Assets.xcassets in Resources */,
+				1115A36F21AE6A04009848A3 /* Main.storyboard in Resources */,
+				1115A4A321B28CAE009848A3 /* Lotus.jpg in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		1115A36221AE6A04009848A3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1115A38321AF8CFC009848A3 /* DXImageResizerFrameView+Getter.swift in Sources */,
+				1115A4A721B28F15009848A3 /* DXCropImageController.swift in Sources */,
+				1115A49D21B27F02009848A3 /* DXImageResizerView+PublicMethod.swift in Sources */,
+				1115A36C21AE6A04009848A3 /* ViewController.swift in Sources */,
+				1115A38121AF8B68009848A3 /* DXImageResizerFrameView+Pan.swift in Sources */,
+				1115A37F21AE83E6009848A3 /* DXImageResizerFrameView.swift in Sources */,
+				1115A49921B1126D009848A3 /* UIImage+Orientation.swift in Sources */,
+				1115A4A921B28F36009848A3 /* DXImageViewController.swift in Sources */,
+				1115A49B21B23F50009848A3 /* DXImageResizerView.swift in Sources */,
+				1115A49721B0E6B8009848A3 /* DXImageResizerFrameView+PublicMethod.swift in Sources */,
+				1115A36A21AE6A04009848A3 /* AppDelegate.swift in Sources */,
+				1115A37D21AE6B48009848A3 /* DXImageResizerConfigure.swift in Sources */,
+				1115A4AB21B29507009848A3 /* ConfigureModel.swift in Sources */,
+				1115A4A521B28EBD009848A3 /* TDXableViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		1115A36D21AE6A04009848A3 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1115A36E21AE6A04009848A3 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		1115A37221AE6A06009848A3 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1115A37321AE6A06009848A3 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		1115A37621AE6A06009848A3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		1115A37721AE6A06009848A3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		1115A37921AE6A06009848A3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 45S7UXYXC7;
+				INFOPLIST_FILE = DXImageResizerView/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.shangzhu.DXImageResizerView;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		1115A37A21AE6A06009848A3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 45S7UXYXC7;
+				INFOPLIST_FILE = DXImageResizerView/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.shangzhu.DXImageResizerView;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1115A36121AE6A04009848A3 /* Build configuration list for PBXProject "DXImageResizerView" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1115A37621AE6A06009848A3 /* Debug */,
+				1115A37721AE6A06009848A3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1115A37821AE6A06009848A3 /* Build configuration list for PBXNativeTarget "DXImageResizerView" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1115A37921AE6A06009848A3 /* Debug */,
+				1115A37A21AE6A06009848A3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 1115A35E21AE6A04009848A3 /* Project object */;
+}
