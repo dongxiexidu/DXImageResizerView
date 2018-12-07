@@ -12,9 +12,11 @@ extension DXImageResizerFrameView {
 
     // MARK: getter
     public func maxResizeX() -> CGFloat {
+        printLog("")
         return maxResizeFrame.origin.x
     }
     public func maxResizeY() -> CGFloat {
+        printLog("")
         return maxResizeFrame.origin.y
     }
     public func maxResizeW() -> CGFloat {
@@ -26,9 +28,11 @@ extension DXImageResizerFrameView {
     
     
     public func imageResizerSize() -> CGSize {
+        printLog("")
         return CGSize.init(width: imageResizerFrame.size.width, height: imageResizerFrame.size.height)
     }
     public func imageViewSize() -> CGSize {
+        printLog("")
         if rotationDirection == .verticalUp || rotationDirection == .verticalDown {
             return CGSize.init(width: imageResizerFrame.size.width, height: imageResizerFrame.size.height)
         }else{

@@ -56,7 +56,7 @@ class DXCropImageController: UIViewController {
     }
     
     deinit {
-        print("DXCropImageController -- deinit")
+        printLog("DXCropImageController -- deinit")
     }
     
     

@@ -11,10 +11,9 @@ import UIKit
 
 extension DXImageResizerFrameView{
     
-
-    
     // MARK: UIPanGestureRecognizer
     @objc func panHandle(pan: UIPanGestureRecognizer) {
+        printLog("")
         let translation = pan.translation(in: self)
         pan.setTranslation(CGPoint.zero, in: self)
         
@@ -30,6 +29,7 @@ extension DXImageResizerFrameView{
     }
     
     private func panBeganHandle(location: CGPoint) {
+        printLog("")
         startImageResizer()
         
         let x : CGFloat = self.imageResizeX
@@ -42,7 +42,7 @@ extension DXImageResizerFrameView{
         let maxX : CGFloat = self.imageResizerFrame.maxX
         let maxY : CGFloat = self.imageResizerFrame.maxY
         
-        let scopeWH : CGFloat = self.scopeWH
+        let scopeWH : CGFloat = _scopeWH
         let halfScopeWH : CGFloat = scopeWH * 0.5
         let leftTopRect = CGRect.init(x: x-halfScopeWH, y: y-halfScopeWH, width: scopeWH, height: scopeWH)
         let leftBotRect = CGRect.init(x: x-halfScopeWH, y: maxY-halfScopeWH, width: scopeWH, height: scopeWH)
@@ -87,10 +87,11 @@ extension DXImageResizerFrameView{
         } else {
             self.currHorn = .center
         }
-        self.startResizeW = width
-        self.startResizeH = height
+        _startResizeW = width
+        _startResizeH = height
     }
     private func panChangedHandle(translation: CGPoint) {
+        printLog("")
         var x = imageResizeX
         var y = imageResizeY
         var width = imageResizeW
@@ -98,7 +99,7 @@ extension DXImageResizerFrameView{
         
         switch self.currHorn {
         case .leftTop:
-            if self.isArbitrarily {
+            if _isArbitrarily {
                 x += translation.x
                 y += translation.y
                 
@@ -113,13 +114,13 @@ extension DXImageResizerFrameView{
                 width = self.diagonal.x - x
                 height = self.diagonal.y - y
                 
-                if width < self.minImageWH {
-                    width = self.minImageWH
+                if width < _minImageWH {
+                    width = _minImageWH
                     x = self.diagonal.x - width
                 }
                 
-                if height < self.minImageWH {
-                    height = self.minImageWH
+                if height < _minImageWH {
+                    height = _minImageWH
                     y = self.diagonal.y - height
                 }
             } else {
@@ -146,12 +147,12 @@ extension DXImageResizerFrameView{
                     x = self.diagonal.x - width
                 }
                 
-                if width < self.minImageWH || height < self.minImageWH {
+                if width < _minImageWH || height < _minImageWH {
                     if self.resizeWHScale >= 1 {
-                        width = self.minImageWH
+                        width = _minImageWH
                         height = width / self.resizeWHScale
                     } else {
-                        height = self.minImageWH
+                        height = _minImageWH
                         width = height * self.resizeWHScale
                     }
                     x = self.diagonal.x - width
@@ -159,7 +160,7 @@ extension DXImageResizerFrameView{
                 }
             }
         case .leftBottom:
-            if self.isArbitrarily {
+            if _isArbitrarily {
                 x += translation.x
                 height = height + translation.y
                 
@@ -174,13 +175,13 @@ extension DXImageResizerFrameView{
                 
                 width = self.diagonal.x - x
                 
-                if width < self.minImageWH {
-                    width = self.minImageWH
+                if width < _minImageWH {
+                    width = _minImageWH
                     x = self.diagonal.x - width
                 }
                 
-                if height < self.minImageWH {
-                    height = self.minImageWH
+                if height < _minImageWH {
+                    height = _minImageWH
                 }
             } else {
                 x += translation.x
@@ -203,12 +204,12 @@ extension DXImageResizerFrameView{
                     x = self.diagonal.x - width
                 }
                 
-                if width < self.minImageWH || height < self.minImageWH {
+                if width < _minImageWH || height < _minImageWH {
                     if self.resizeWHScale >= 1 {
-                        width = self.minImageWH
+                        width = _minImageWH
                         height = width / self.resizeWHScale
                     } else {
-                        height = self.minImageWH
+                        height = _minImageWH
                         width = height * self.resizeWHScale
                     }
                     x = self.diagonal.x - width
@@ -216,7 +217,7 @@ extension DXImageResizerFrameView{
                 }
             }
         case .rightTop:
-            if self.isArbitrarily {
+            if _isArbitrarily {
                 y += translation.y
                 width = width + translation.x
                 
@@ -231,12 +232,12 @@ extension DXImageResizerFrameView{
                 
                 height = self.diagonal.y - y
                 
-                if width < self.minImageWH {
-                    width = self.minImageWH
+                if width < _minImageWH {
+                    width = _minImageWH
                 }
                 
-                if height < self.minImageWH {
-                    height = self.minImageWH
+                if height < _minImageWH {
+                    height = _minImageWH
                     y = self.diagonal.y - height
                 }
             } else {
@@ -261,12 +262,12 @@ extension DXImageResizerFrameView{
                     y = self.diagonal.y - height
                 }
                 
-                if width < self.minImageWH || height < self.minImageWH {
+                if width < _minImageWH || height < _minImageWH {
                     if self.resizeWHScale >= 1 {
-                        width = self.minImageWH;
+                        width = _minImageWH;
                         height = width / self.resizeWHScale
                     } else {
-                        height = self.minImageWH;
+                        height = _minImageWH;
                         width = height * self.resizeWHScale
                     }
                     x = self.diagonal.x
@@ -274,7 +275,7 @@ extension DXImageResizerFrameView{
                 }
             }
         case .rightBottom:
-            if self.isArbitrarily {
+            if _isArbitrarily {
                 width = width + translation.x
                 height = height + translation.y
                 
@@ -288,12 +289,12 @@ extension DXImageResizerFrameView{
                     height = maxResizeMaxY - self.diagonal.y
                 }
                 
-                if width < self.minImageWH {
-                    width = self.minImageWH
+                if width < _minImageWH {
+                    width = _minImageWH
                 }
                 
-                if height < self.minImageWH {
-                    height = self.minImageWH
+                if height < _minImageWH {
+                    height = _minImageWH
                 }
             } else {
                 width = width + translation.x
@@ -314,12 +315,12 @@ extension DXImageResizerFrameView{
                     width = height * self.resizeWHScale
                 }
                 
-                if width < self.minImageWH || height < self.minImageWH {
+                if width < _minImageWH || height < _minImageWH {
                     if self.resizeWHScale >= 1 {
-                        width = self.minImageWH
+                        width = _minImageWH
                         height = width / self.resizeWHScale
                     } else {
-                        height = self.minImageWH
+                        height = _minImageWH
                         width = height * self.resizeWHScale
                     }
                     x = self.diagonal.x
@@ -336,8 +337,8 @@ extension DXImageResizerFrameView{
             
             width = self.diagonal.x - x
             
-            if width < self.minImageWH {
-                width = self.minImageWH
+            if width < _minImageWH {
+                width = _minImageWH
                 x = self.diagonal.x - width
             }
         case .rightMid:
@@ -347,8 +348,8 @@ extension DXImageResizerFrameView{
                 width = maxResizeMaxX - self.diagonal.x
             }
             
-            if width < self.minImageWH {
-                width = self.minImageWH
+            if width < _minImageWH {
+                width = _minImageWH
             }
             
         case .topMid:
@@ -360,8 +361,8 @@ extension DXImageResizerFrameView{
             
             height = self.diagonal.y - y
             
-            if height < self.minImageWH {
-                height = self.minImageWH
+            if height < _minImageWH {
+                height = _minImageWH
                 y = self.diagonal.y - height
             }
         case .bottomMid:
@@ -372,8 +373,8 @@ extension DXImageResizerFrameView{
                 height = maxResizeMaxY - self.diagonal.y
             }
             
-            if (height < self.minImageWH) {
-                height = self.minImageWH;
+            if (height < _minImageWH) {
+                height = _minImageWH;
             }
             
         default:
@@ -386,23 +387,23 @@ extension DXImageResizerFrameView{
         
         if zoomFrame.origin.x < 0 {
             contentOffset.x -= zoomFrame.origin.x
-        } else if zoomFrame.maxX > self.baseImageW {
-            contentOffset.x -= zoomFrame.maxX - self.baseImageW;
+        } else if zoomFrame.maxX > _baseImageW {
+            contentOffset.x -= zoomFrame.maxX - _baseImageW;
         }
         if zoomFrame.origin.y < 0 {
             contentOffset.y -= zoomFrame.origin.y
-        } else if zoomFrame.maxY > self.baseImageH {
-            contentOffset.y -= zoomFrame.maxY - self.baseImageH
+        } else if zoomFrame.maxY > _baseImageH {
+            contentOffset.y -= zoomFrame.maxY - _baseImageH
         }
         
         self.scrollView.setContentOffset(contentOffset, animated: false)
         var wZoomScale : CGFloat = 0
         var hZoomScale : CGFloat = 0
-        if width > self.startResizeW {
-            wZoomScale = width / self.baseImageW
+        if width > _startResizeW {
+            wZoomScale = width / _baseImageW
         }
-        if height > self.startResizeH {
-            hZoomScale = height / self.baseImageH
+        if height > _startResizeH {
+            hZoomScale = height / _baseImageH
         }
         let zoomScale = max(wZoomScale, hZoomScale)
         if zoomScale > self.scrollView.zoomScale {
@@ -413,6 +414,7 @@ extension DXImageResizerFrameView{
     
     // MARK: - super method
     override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
+        printLog("")
         if self.panGR.isEnabled == false {
             return false
         }
@@ -424,7 +426,7 @@ extension DXImageResizerFrameView{
         let maxX : CGFloat = self.imageResizerFrame.maxX
         let maxY : CGFloat = self.imageResizerFrame.maxY
         
-        let scopeWH : CGFloat = self.scopeWH
+        let scopeWH : CGFloat = _scopeWH
         let halfScopeWH : CGFloat = scopeWH * 0.5
         let leftTopRect = CGRect.init(x: x-halfScopeWH, y: y-halfScopeWH, width: scopeWH, height: scopeWH)
         let leftBotRect = CGRect.init(x: x-halfScopeWH, y: maxY-halfScopeWH, width: scopeWH, height: scopeWH)

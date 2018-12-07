@@ -12,13 +12,14 @@ extension DXImageResizerFrameView{
     // MARK: - puild method
     
     public func recovery(duration : TimeInterval) {
+        printLog("")
         updateRotationDirection(direction: .verticalUp)
-        let adjustResizeFrames : CGRect = self.isArbitrarily ? baseImageResizerFrame() : adjustResizeFrame()
+        let adjustResizeFrames : CGRect = _isArbitrarily ? baseImageResizerFrame() : adjustResizeFrame()
         
         let contentInset = scrollViewContentInsetWithAdjustResizeFrame(adjustResizeFrame: adjustResizeFrames)
         let minZoomScale : CGFloat = scrollViewMinZoomScaleWithResizeSize(size: adjustResizeFrames.size)
-        let contentOffsetX : CGFloat = -contentInset.left + (self.baseImageW * minZoomScale - adjustResizeFrames.size.width) * 0.5;
-        let contentOffsetY : CGFloat = -contentInset.top + (self.baseImageH * minZoomScale - adjustResizeFrames.size.height) * 0.5
+        let contentOffsetX : CGFloat = -contentInset.left + (_baseImageW * minZoomScale - adjustResizeFrames.size.width) * 0.5;
+        let contentOffsetY : CGFloat = -contentInset.top + (_baseImageH * minZoomScale - adjustResizeFrames.size.height) * 0.5
         
         updateImageResizerFrame(resizerFrame: adjustResizeFrames, animateDuration: duration)
         
@@ -29,30 +30,34 @@ extension DXImageResizerFrameView{
     }
     
     public func recoveryDone() {
+        printLog("")
         updateImageResizerFrame(animateDuration: -1.0)
         self.window?.isUserInteractionEnabled = true
     }
     
     public func mirrorDone() {
-        hideOrShowBlurEffect(isHiden: false, animationDuration: TimeInterval(self.defaultDuration))
+        printLog("")
+        hideOrShowBlurEffect(isHiden: false, animationDuration: TimeInterval(_defaultDuration))
         checkIsCanRecovery()
         self.window?.isUserInteractionEnabled = true
     }
     public func willRecovery() {
+        printLog("")
         self.window?.isUserInteractionEnabled = false
         removeTimer()
     }
     
     public func updateBorderType(borderType: DXImageResizerBorderStyle){
-        if self.borderStyle == borderStyle {
-            return
-        }
+        printLog(borderType)
         
         self.borderStyle = borderType
+        updateBorderStyle()
+        updateStrokeColor()
         updateImageResizerFrame(resizerFrame: _imageResizerFrame, animateDuration: -1.0)
     }
     
     public func updateImageResizerFrameWithVerBaseMargin(verBaseMargin : CGFloat,horBaseMargin : CGFloat){
+        printLog("")
         self.verBaseMargin = verBaseMargin
         self.horBaseMargin = horBaseMargin
         self.layer.transform = CATransform3DIdentity
@@ -60,6 +65,7 @@ extension DXImageResizerFrameView{
     }
     
     public func startImageResizer() {
+        printLog("")
         self.isPrepareToScale = true
         removeTimer()
         hideOrShowBlurEffect(isHiden: true, animationDuration: 0.2)
@@ -68,17 +74,20 @@ extension DXImageResizerFrameView{
     
     public func endedImageResizer() {
         let contentInset = scrollViewContentInsetWithAdjustResizeFrame(adjustResizeFrame: self.imageResizerFrame)
+        printLog(contentInset)
         self.scrollView.contentInset = contentInset
-        _ = addTimer()
+        addTimer()
     }
     public func rotation(direction : DXImageResizerRotationDirection, rotationDuration: TimeInterval) {
-        self._isRotation = true
+        printLog("")
+        _isRotation = true
         removeTimer()
         updateRotationDirection(direction: direction)
         updateImageResizerFrame(animateDuration: rotationDuration)
     }
     
     public func willMirror(animated : Bool) {
+        printLog("")
         self.window?.isUserInteractionEnabled = false
         if animated {
             hideOrShowBlurEffect(isHiden: true, animationDuration: -1.0)
@@ -86,9 +95,10 @@ extension DXImageResizerFrameView{
     }
     
     public func verticalityMirror(diffX : CGFloat) {
+        printLog("")
         var w = !self.isHorizontalDirection ? self.bounds.size.width : self.bounds.size.height
         w *= self.sizeScale
-        let x = (self.contentSize.width - w) * 0.5 + diffX
+        let x = (_contentSize.width - w) * 0.5 + diffX
         var frames = self.frame
         frames.origin.x = x
         
@@ -96,18 +106,20 @@ extension DXImageResizerFrameView{
         self.frame = frames
     }
     
-    public func horizontalMirror(diffX : CGFloat) {
+    public func horizontalMirror(diffY : CGFloat) {
+        printLog(diffY)
         var h = !self.isHorizontalDirection ? self.bounds.size.height : self.bounds.size.width
         h *= self.sizeScale
-        let y = (self.contentSize.height - h) * 0.5 + diffX
+        let y = (_contentSize.height - h) * 0.5 + diffY
         var frames = self.frame
-        frames.origin.x = y
+        frames.origin.y = y
         
         self.scrollView.frame = frames
         self.frame = frames
     }
     
     public func imageResizer(completion: ((UIImage?)->())?, isOriginImageSize: Bool, referenceWidth: CGFloat) {
+        printLog("")
         if completion == nil {
             return
         }

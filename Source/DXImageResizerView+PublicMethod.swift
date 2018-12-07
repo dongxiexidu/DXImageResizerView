@@ -12,7 +12,7 @@ import UIKit
 extension DXImageResizerView {
     
     public func setVerticalityMirror(verticalMirror : Bool, animated: Bool) {
-        
+        printLog("")
         if self.frameView.isPrepareToScale {
             // 裁剪区域预备缩放至适合位置，镜像功能暂不可用，此时应该将镜像按钮设为不可点或隐藏
             return
@@ -25,7 +25,7 @@ extension DXImageResizerView {
     }
     
     public func setHorizontalMirror(horizontalMirror : Bool, animated: Bool) {
-        
+        printLog("")
         if self.frameView.isPrepareToScale {
             // 裁剪区域预备缩放至适合位置，镜像功能暂不可用，此时应该将镜像按钮设为不可点或隐藏
             return
@@ -38,6 +38,7 @@ extension DXImageResizerView {
     }
     
     public func setMirror(isHorizontalMirror : Bool, animated : Bool) {
+        printLog("")
         var transform : CATransform3D = self.layer.transform
         var mirror : Bool = false
         if isHorizontalMirror {
@@ -54,7 +55,7 @@ extension DXImageResizerView {
             guard let self = self else { return }
             self.layer.transform = aTransform
             if isHorizontalMirror {
-                self.frameView.horizontalMirror(diffX: mirror ? self._contentInsets.bottom : self._contentInsets.top)
+                self.frameView.horizontalMirror(diffY: mirror ? self._contentInsets.bottom : self._contentInsets.top)
                 
             } else {
                 self.frameView.verticalityMirror(diffX: mirror ? self._contentInsets.right : self._contentInsets.left)
@@ -91,6 +92,7 @@ extension DXImageResizerView {
     
     /// 同时更新图片、垂直边距和水平边距
     public func updateResizeImage(resizeImage: UIImage, verBaseMargin: CGFloat, horBaseMargin: CGFloat) {
+        printLog("")
         self.imageView.image = resizeImage
         self.verBaseMargin = verBaseMargin
         self.horBaseMargin = horBaseMargin
@@ -99,6 +101,7 @@ extension DXImageResizerView {
     
     /// 旋转90度，支持4个方向，分别是垂直向上、水平向左、垂直向下、水平向右
     public func rotation() {
+        printLog("")
         if self.frameView.isPrepareToScale {
             // 裁剪区域预备缩放至适合位置，旋转功能暂不可用，此时应该将旋转按钮设为不可点或隐藏
             return
@@ -135,6 +138,7 @@ extension DXImageResizerView {
         
     }
     public func recovery() {
+        printLog("")
         if self.frameView.isCanRecovery == false{
             // 已经是初始状态，不需要重置
             return
@@ -173,15 +177,19 @@ extension DXImageResizerView {
     }
     
     public func originImageResizer(completion : ((UIImage?)->())?){
+        printLog("")
         imageResizer(completion: completion, isOriginImageSize: true, referenceWidth: 0)
     }
     public func imageResizer(completion : ((UIImage?)->())?, referenceWidth : CGFloat){
+        printLog("")
         imageResizer(completion: completion, isOriginImageSize: false, referenceWidth: referenceWidth)
     }
     public func imageResizer(completion : ((UIImage?)->())?){
+        printLog("")
         imageResizer(completion: completion, isOriginImageSize: false, referenceWidth: 0)
     }
     public func imageResizer(completion : ((UIImage?)->())?,isOriginImageSize : Bool, referenceWidth : CGFloat){
+        printLog("")
         if self.frameView.isPrepareToScale {
             // 裁剪区域预备缩放至适合位置，裁剪功能暂不可用，此时应该将裁剪按钮设为不可点或隐藏
             completion?(nil)

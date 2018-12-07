@@ -11,6 +11,7 @@ import UIKit
 extension UIImage {
     
     public func dx_fixOrientation() -> UIImage?{
+        printLog("")
         if imageOrientation == .up {
             return self
         }
@@ -65,6 +66,7 @@ extension UIImage {
     }
     
     public func dx_rotate(orientation : UIImage.Orientation) -> UIImage? {
+        printLog("")
         if let cgImage = self.cgImage {
             var bounds : CGRect = CGRect.init(x: 0, y: 0, width: cgImage.width, height: cgImage.height)
             let rect : CGRect = bounds
@@ -127,15 +129,16 @@ extension UIImage {
 
     
     public func dx_verticalMirror() -> UIImage?{
-        
+        printLog("")
         return dx_rotate(orientation: UIImage.Orientation.upMirrored)
     }
     public func dx_horizontalMirror() -> UIImage?{
-        
+        printLog("")
         return dx_rotate(orientation: UIImage.Orientation.downMirrored)
     }
     
     public func dx_swapRectWidthHeight(rect: CGRect) -> CGRect{
+        printLog("")
         var tmpRect = rect
         tmpRect.size.width = rect.size.height
         tmpRect.size.height = rect.size.width

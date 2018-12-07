@@ -7,6 +7,18 @@
 //
 
 import UIKit
+
+/// Print log
+func printLog<T>(_ message: T,
+                 file: String = #file,
+                 method: String = #function,
+                 line: Int = #line)
+{
+    #if DEBUG
+    print("\((file as NSString).lastPathComponent)[\(line)], \(method): \(message)")
+    #endif
+}
+
 /// 遮罩样式
 public enum DXImageResizerMaskType {
     /// 通常类型，bgColor能任意设置
@@ -67,7 +79,9 @@ class DXImageResizerConfigure: NSObject {
     
     /// 遮罩样式
     var maskType : DXImageResizerMaskType = DXImageResizerMaskType.normal {
+        
         didSet (value){
+            printLog("")
             if value == .lightBlur {
                 self.bgColor = UIColor.white
             }else if value == .darkBlur {
@@ -85,15 +99,17 @@ class DXImageResizerConfigure: NSObject {
     /// 裁剪线颜色
     var strokeColor : UIColor = UIColor.white
     
+    var _bgColor : UIColor = UIColor.black
     /// 背景颜色
     var bgColor : UIColor = UIColor.black{
         didSet (value){
+            printLog("")
             if self.maskType == .lightBlur {
-                bgColor = UIColor.white
+                _bgColor = UIColor.white
             }else if self.maskType == .darkBlur {
-                bgColor = UIColor.black
+                _bgColor = UIColor.black
             }else{
-                bgColor = value
+                _bgColor = value
             }
         }
     }
@@ -118,13 +134,14 @@ class DXImageResizerConfigure: NSObject {
     
     
     public class func defaultConfigure(resizeImage: UIImage, make:(DXImageResizerConfigure)->() ) -> DXImageResizerConfigure{
+        printLog("")
         let configure = DXImageResizerConfigure.init()
         configure.resizeImage = resizeImage
         make(configure)
         return configure
     }
     public class func blurMaskTypeConfigure(resizeImage: UIImage,isLight : Bool, make:(DXImageResizerConfigure)->() ) -> DXImageResizerConfigure{
-        
+        printLog("")
         let maskType : DXImageResizerMaskType = isLight ? .lightBlur : .darkBlur
         let configure = self.defaultConfigure(resizeImage: resizeImage) { (make) -> () in
             make.dx.maskType(maskType: maskType)

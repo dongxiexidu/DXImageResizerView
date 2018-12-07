@@ -44,10 +44,11 @@ class DXImageResizerFrameView: UIView {
     
     /// 边框样式
     var borderStyle : DXImageResizerBorderStyle = DXImageResizerBorderStyle.concise{
-        didSet{
+        didSet (newValue){
+            printLog(newValue)
             var lineW : CGFloat = 0
-            if borderStyle == .concise || borderStyle == .conciseWithoutOtherDot {
-                if borderStyle == .concise {
+            if newValue == .concise || newValue == .conciseWithoutOtherDot {
+                if newValue == .concise {
                     _ = leftMidDot
                     _ = rightMidDot
                     _ = topMidDot
@@ -62,7 +63,7 @@ class DXImageResizerFrameView: UIView {
                 horBottomLine.removeFromSuperlayer()
                 verLeftLine.removeFromSuperlayer()
                 verRightLine.removeFromSuperlayer()
-                self.isHideFrameLine = false
+                _isHideFrameLine = false
             } else {
                 _ = horTopLine
                 _ = horBottomLine
@@ -72,7 +73,7 @@ class DXImageResizerFrameView: UIView {
                 rightMidDot.removeFromSuperlayer()
                 topMidDot.removeFromSuperlayer()
                 bottomMidDot.removeFromSuperlayer()
-                lineW = arrLineW / sizeScale
+                lineW = _arrLineW / sizeScale
             }
             
             self.leftTopDot.lineWidth = lineW
@@ -81,6 +82,44 @@ class DXImageResizerFrameView: UIView {
             self.rightBottomDot.lineWidth = lineW
         }
     }
+    
+    func updateBorderStyle() {
+        printLog("")
+        var lineW : CGFloat = 0
+        if borderStyle == .concise || borderStyle == .conciseWithoutOtherDot {
+            if borderStyle == .concise {
+                _ = leftMidDot
+                _ = rightMidDot
+                _ = topMidDot
+                _ = bottomMidDot
+            }else{
+                leftMidDot.removeFromSuperlayer()
+                rightMidDot.removeFromSuperlayer()
+                topMidDot.removeFromSuperlayer()
+                bottomMidDot.removeFromSuperlayer()
+            }
+            horTopLine.removeFromSuperlayer()
+            horBottomLine.removeFromSuperlayer()
+            verLeftLine.removeFromSuperlayer()
+            verRightLine.removeFromSuperlayer()
+            _isHideFrameLine = false
+        } else {
+            _ = horTopLine
+            _ = horBottomLine
+            _ = verLeftLine
+            _ = verRightLine
+            leftMidDot.removeFromSuperlayer()
+            rightMidDot.removeFromSuperlayer()
+            topMidDot.removeFromSuperlayer()
+            bottomMidDot.removeFromSuperlayer()
+            lineW = _arrLineW / sizeScale
+        }
+        
+        self.leftTopDot.lineWidth = lineW
+        self.leftBottomDot.lineWidth = lineW
+        self.rightTopDot.lineWidth = lineW
+        self.rightBottomDot.lineWidth = lineW
+    }
 
     /// 手势
     var panGR : UIPanGestureRecognizer!
@@ -88,26 +127,46 @@ class DXImageResizerFrameView: UIView {
     /// 动画曲线
     var animationCurve : DXAnimationCurve = DXAnimationCurve.easeOut{
         didSet{
+            printLog("")
             switch animationCurve {
             case .easeInOut:
-                self.kCAMediaTimingFunction = CAMediaTimingFunctionName.easeInEaseOut.rawValue
-                self.animationOption = UIView.AnimationOptions.curveEaseInOut
+                _kCAMediaTimingFunction = CAMediaTimingFunctionName.easeInEaseOut.rawValue
+                _animationOption = UIView.AnimationOptions.curveEaseInOut
             case .easeIn:
-                self.kCAMediaTimingFunction = CAMediaTimingFunctionName.easeIn.rawValue
-                self.animationOption = UIView.AnimationOptions.curveEaseIn
+                _kCAMediaTimingFunction = CAMediaTimingFunctionName.easeIn.rawValue
+                _animationOption = UIView.AnimationOptions.curveEaseIn
             case .easeOut:
-                self.kCAMediaTimingFunction = CAMediaTimingFunctionName.easeOut.rawValue
-                self.animationOption = UIView.AnimationOptions.curveEaseOut
+                _kCAMediaTimingFunction = CAMediaTimingFunctionName.easeOut.rawValue
+                _animationOption = UIView.AnimationOptions.curveEaseOut
             case .linear:
-                self.kCAMediaTimingFunction = CAMediaTimingFunctionName.linear.rawValue
-                self.animationOption = UIView.AnimationOptions.curveLinear
+                _kCAMediaTimingFunction = CAMediaTimingFunctionName.linear.rawValue
+                _animationOption = UIView.AnimationOptions.curveLinear
             }
+        }
+    }
+    
+    func updateAnimationCure() {
+        printLog("")
+        switch animationCurve {
+        case .easeInOut:
+            _kCAMediaTimingFunction = CAMediaTimingFunctionName.easeInEaseOut.rawValue
+            _animationOption = UIView.AnimationOptions.curveEaseInOut
+        case .easeIn:
+            _kCAMediaTimingFunction = CAMediaTimingFunctionName.easeIn.rawValue
+            _animationOption = UIView.AnimationOptions.curveEaseIn
+        case .easeOut:
+            _kCAMediaTimingFunction = CAMediaTimingFunctionName.easeOut.rawValue
+            _animationOption = UIView.AnimationOptions.curveEaseOut
+        case .linear:
+            _kCAMediaTimingFunction = CAMediaTimingFunctionName.linear.rawValue
+            _animationOption = UIView.AnimationOptions.curveLinear
         }
     }
     
     /// 裁剪线颜色
     var strokeColor : UIColor = UIColor.white{
         didSet{
+            printLog("")
             let strokeCGColor = strokeColor.cgColor
             let clearCGColor = UIColor.clear.cgColor
             // 显示
@@ -152,6 +211,50 @@ class DXImageResizerFrameView: UIView {
         }
     }
     
+    func updateStrokeColor() {
+        printLog("")
+        let strokeCGColor = strokeColor.cgColor
+        let clearCGColor = UIColor.clear.cgColor
+        // 显示
+        CATransaction.begin()
+        // 关闭动画
+        CATransaction.setDisableActions(true)
+        self.frameLayer?.strokeColor = strokeColor.cgColor
+        if borderStyle == .concise || borderStyle == .conciseWithoutOtherDot {
+            self.leftTopDot.fillColor = strokeCGColor
+            self.leftBottomDot.fillColor = strokeCGColor
+            self.rightTopDot.fillColor = strokeCGColor
+            self.rightBottomDot.fillColor = strokeCGColor
+            
+            self.leftTopDot.strokeColor = clearCGColor
+            self.leftBottomDot.strokeColor = clearCGColor
+            self.rightTopDot.strokeColor = clearCGColor
+            self.rightBottomDot.strokeColor = clearCGColor
+            
+            self.leftMidDot.fillColor = strokeCGColor
+            self.rightMidDot.fillColor = strokeCGColor
+            self.topMidDot.fillColor = strokeCGColor
+            self.bottomMidDot.fillColor = strokeCGColor
+        } else {
+            
+            self.leftTopDot.strokeColor = strokeCGColor
+            self.leftBottomDot.strokeColor = strokeCGColor
+            self.rightTopDot.strokeColor = strokeCGColor
+            self.rightBottomDot.strokeColor = strokeCGColor
+            
+            self.leftTopDot.fillColor = clearCGColor
+            self.leftBottomDot.fillColor = clearCGColor
+            self.rightTopDot.fillColor = clearCGColor
+            self.rightBottomDot.fillColor = clearCGColor
+            
+            self.horTopLine.strokeColor = strokeCGColor
+            self.horBottomLine.strokeColor = strokeCGColor
+            self.verLeftLine.strokeColor = strokeCGColor
+            self.verRightLine.strokeColor = strokeCGColor
+        }
+        CATransaction.commit()
+    }
+    
     
     var _fillColor : UIColor = UIColor.white
     ///
@@ -160,15 +263,16 @@ class DXImageResizerFrameView: UIView {
             return _fillColor
         }
         set{
+            printLog("")
             if maskType == .lightBlur {
                 _fillColor = UIColor.white
             } else if maskType == .darkBlur {
                 _fillColor = UIColor.black
             }
-            fillRgba = self.createRGBAColor(color: fillColor)
-            _fillColor = UIColor.init(red: fillRgba.dx_r, green: fillRgba.dx_g, blue: fillRgba.dx_b, alpha: fillRgba.dx_a * maskAlpha)
+            _fillRgba = self.createRGBAColor(color: fillColor)
+            _fillColor = UIColor.init(red: _fillRgba.dx_r, green: _fillRgba.dx_g, blue: _fillRgba.dx_b, alpha: _fillRgba.dx_a * maskAlpha)
             
-            clearColor = UIColor.init(red: fillRgba.dx_r, green: fillRgba.dx_g, blue: fillRgba.dx_b, alpha: 0)
+            _clearColor = UIColor.init(red: _fillRgba.dx_r, green: _fillRgba.dx_g, blue: _fillRgba.dx_b, alpha: 0)
             
             if blurContentView != nil {
                 blurContentView.backgroundColor = fillColor
@@ -185,10 +289,11 @@ class DXImageResizerFrameView: UIView {
     /// 遮罩颜色的透明度（背景颜色 * 透明度）
     var maskAlpha : CGFloat = 0.75 {
         didSet{
+            printLog("")
             if maskAlpha == 0 {
-                _fillColor = clearColor
+                _fillColor = _clearColor
             }else{
-                _fillColor = UIColor.init(red: fillRgba.dx_r, green: fillRgba.dx_g, blue: fillRgba.dx_b, alpha: fillRgba.dx_a * maskAlpha)
+                _fillColor = UIColor.init(red: _fillRgba.dx_r, green: _fillRgba.dx_g, blue: _fillRgba.dx_b, alpha: _fillRgba.dx_a * maskAlpha)
             }
             if blurContentView != nil {
                 blurContentView.backgroundColor = fillColor
@@ -206,29 +311,31 @@ class DXImageResizerFrameView: UIView {
     /// 裁剪宽高比（0则为任意比例，可控8个方向，固定比例为4个方向）
     var resizeWHScale : CGFloat = 0 {
         didSet{
+            printLog("")
             _resizeWHScale = resizeWHScale
             setResizeWHScale(resizeWHScale: resizeWHScale, animated: false)
         }
     }
     
     func setResizeWHScale(resizeWHScale : CGFloat, animated: Bool) {
+        printLog("")
         var tempResizeWHScale = resizeWHScale
         if resizeWHScale > 0 {
             if self.isHorizontalDirection {
                 tempResizeWHScale = 1.0 / resizeWHScale
             }
         }
-        if self.resizeWHScale == tempResizeWHScale {
+        if _resizeWHScale == tempResizeWHScale {
             return
         }
         
         _resizeWHScale = tempResizeWHScale
-        self.updateDuration = animated ? self.defaultDuration : -1
-        self.isArbitrarily = tempResizeWHScale <= 0
+        _updateDuration = animated ? _defaultDuration : -1
+        _isArbitrarily = tempResizeWHScale <= 0
         
         if borderStyle == .concise {
             var midDotOpacity : Float = 1
-            if self.isArbitrarily == false {
+            if _isArbitrarily == false {
                 midDotOpacity = 0
             }
             self.leftMidDot.opacity = midDotOpacity
@@ -254,40 +361,44 @@ class DXImageResizerFrameView: UIView {
     ///
     var imageResizerFrame : CGRect = CGRect.zero {
         didSet{
+            printLog(imageResizerFrame)
             updateImageResizerFrame(resizerFrame: imageResizerFrame, animateDuration: -1)
         }
     }
     internal var imageResizeX: CGFloat {
         get{
-            return imageResizerFrame.origin.x
+            return _imageResizerFrame.origin.x
         }
         set{
-            imageResizerFrame.origin.x = imageResizeX
+            _imageResizerFrame.origin.x = imageResizeX
         }
     }
     internal var imageResizeY: CGFloat {
         
         get{
-            return imageResizerFrame.origin.y
+            return _imageResizerFrame.origin.y
         }
         set{
-            imageResizerFrame.origin.y = imageResizeY
+            printLog("")
+            _imageResizerFrame.origin.y = imageResizeY
         }
     }
     internal var imageResizeW: CGFloat {
         get{
-            return imageResizerFrame.size.width
+            return _imageResizerFrame.size.width
         }
         set{
-            imageResizerFrame.size.width = imageResizeW
+            printLog("")
+            _imageResizerFrame.size.width = imageResizeW
         }
     }
     internal var imageResizeH: CGFloat {
         get{
-            return imageResizerFrame.size.height
+            return _imageResizerFrame.size.height
         }
         set{
-            imageResizerFrame.size.height = imageResizeH
+            printLog("")
+            _imageResizerFrame.size.height = imageResizeH
         }
     }
     
@@ -303,6 +414,7 @@ class DXImageResizerFrameView: UIView {
     /// 是否可以重置
     var isCanRecovery : Bool = false{
         didSet{
+            printLog("")
             if self.imageResizerIsCanRecovery != nil {
                 self.imageResizerIsCanRecovery(isCanRecovery)
             }
@@ -319,6 +431,7 @@ class DXImageResizerFrameView: UIView {
     ///
     var isRotatedAutoScale : Bool = false{
         didSet{
+            printLog("")
             if _isRotatedAutoScale == isRotatedAutoScale {
                 return
             }
@@ -328,9 +441,21 @@ class DXImageResizerFrameView: UIView {
             }
         }
     }
+    func updateIsRotatedAutoScale() {
+        printLog("")
+        if _isRotatedAutoScale == isRotatedAutoScale {
+            return
+        }
+        _isRotatedAutoScale = isRotatedAutoScale
+        if self.superview != nil {
+            updateMaxResizeFrame(direction: self.rotationDirection)
+        }
+    }
+    
     ///
     var isPrepareToScale : Bool = false{
         didSet{
+            printLog("")
             if self.imageResizerIsPrepareToScale != nil {
                 self.imageResizerIsPrepareToScale(isPrepareToScale)
             }
@@ -356,90 +481,106 @@ class DXImageResizerFrameView: UIView {
     private var frameLayer : CAShapeLayer?
     
     private lazy var leftTopDot: CAShapeLayer = {
+        printLog("")
         return createShapeLayer(lineWidth: 0)
     }()
     private lazy var leftMidDot : CAShapeLayer = {
+        printLog("")
         return createShapeLayer(lineWidth: 0)
     }()
     private lazy var leftBottomDot : CAShapeLayer = {
+        printLog("")
         return createShapeLayer(lineWidth: 0)
     }()
     private lazy var rightTopDot : CAShapeLayer = {
+        printLog("")
         return createShapeLayer(lineWidth: 0)
     }()
     private lazy var rightMidDot : CAShapeLayer = {
+        printLog("")
         return createShapeLayer(lineWidth: 0)
     }()
     private lazy var rightBottomDot : CAShapeLayer = {
+        printLog("")
         return createShapeLayer(lineWidth: 0)
     }()
     private lazy var topMidDot : CAShapeLayer = {
+        printLog("")
         return createShapeLayer(lineWidth: 0)
     }()
     private lazy var bottomMidDot : CAShapeLayer = {
+        printLog("")
         return createShapeLayer(lineWidth: 0)
     }()
     
     private lazy var horTopLine : CAShapeLayer = {
+        printLog("")
         return createShapeLayer(lineWidth: 0.5)
     }()
     private lazy var horBottomLine : CAShapeLayer = {
+        printLog("")
         return createShapeLayer(lineWidth: 0.5)
     }()
     private lazy var verLeftLine : CAShapeLayer = {
+        printLog("")
         return createShapeLayer(lineWidth: 0.5)
     }()
     private lazy var verRightLine : CAShapeLayer = {
+        printLog("")
         return createShapeLayer(lineWidth: 0.5)
     }()
     
     var currHorn : DXRectHorn = DXRectHorn.center
     var diagonal : CGPoint = CGPoint.zero
-    var originImageFrame : CGRect = CGRect.zero
+    var originImageFrame : CGRect = .zero{
+        didSet{
+            printLog("")
+            _originWHScale = originImageFrame.size.width / originImageFrame.size.height
+        }
+    }
     var maxResizeFrame : CGRect = CGRect.zero
     
     
     ///
-    public var defaultDuration : CGFloat = 0.27
-    private var updateDuration : CGFloat = -1.0
-    private var kCAMediaTimingFunction : String!
-    private var animationOption = UIView.AnimationOptions.curveEaseInOut
+    public var _defaultDuration : CGFloat = 0.27
+    private var _updateDuration : CGFloat = -1.0
+    private var _kCAMediaTimingFunction : String!
+    private var _animationOption = UIView.AnimationOptions.curveEaseInOut
     
-    private var dotWH : CGFloat = 10
-    private var arrLineW : CGFloat = 2.5
-    private var arrLength : CGFloat = 20.0
-    internal var scopeWH : CGFloat = 50.0
-    internal var minImageWH : CGFloat = 70
+    private var _dotWH : CGFloat = 10
+    private var _arrLineW : CGFloat = 2.5
+    private var _arrLength : CGFloat = 20.0
+    internal var _scopeWH : CGFloat = 50.0
+    internal var _minImageWH : CGFloat = 70
     internal var _isRotation : Bool = false
     
-    public var baseImageW : CGFloat = 0
-    public var baseImageH : CGFloat = 0
+    public var _baseImageW : CGFloat = 0
+    public var _baseImageH : CGFloat = 0
     
-    internal var startResizeW : CGFloat = 0
-    internal var startResizeH : CGFloat = 0
+    internal var _startResizeW : CGFloat = 0
+    internal var _startResizeH : CGFloat = 0
     
-    private var originWHScale : CGFloat = 0
+    private var _originWHScale : CGFloat = 0
     
-    private var verSizeScale : CGFloat = 0
-    private var horSizeScale : CGFloat = 0
+    private var _verSizeScale : CGFloat = 0
+    private var _horSizeScale : CGFloat = 0
     
-    private var diffHalfW : CGFloat = 0
+    private var _diffHalfW : CGFloat = 0
     
     /// 任意的
-    public var isArbitrarily : Bool = false
+    public var _isArbitrarily : Bool = false
     
-    private var fillRgba : DXRGBAColor!
-    private var clearColor : UIColor = UIColor.clear
+    private var _fillRgba : DXRGBAColor!
+    private var _clearColor : UIColor = UIColor.clear
     
-    private var isHideBlurEffect : Bool = false
-    private var isHideFrameLine : Bool = false
+    private var _isHideBlurEffect : Bool = false
+    private var _isHideFrameLine : Bool = false
     
-    private var diffRotLength : CGFloat = 1000
+    private var _diffRotLength : CGFloat = 1000
     /// 扩大旋转时的区域（防止旋转时有空白区域）
-    private var bgFrame : CGRect = CGRect.zero
+    private var _bgFrame : CGRect = CGRect.zero
     
-    internal var contentSize : CGSize = CGSize.zero
-    private var isRotation : Bool = false
+    internal var _contentSize : CGSize = CGSize.zero
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -465,20 +606,24 @@ class DXImageResizerFrameView: UIView {
                      imageResizerIsCanRecovery: @escaping ((Bool)->()),
                      imageResizerIsPrepareToScale: @escaping ((Bool)->())){
     
+        printLog("")
         self.init(frame: frame)
         
         self.clipsToBounds = false
-        self.contentSize = contentSize
+        _contentSize = contentSize
         self.maskType = maskType
         self.horBaseMargin = horBaseMargin
         self.verBaseMargin = verBaseMargin
         self.imageResizerIsPrepareToScale = imageResizerIsPrepareToScale
         self.imageResizerIsCanRecovery = imageResizerIsCanRecovery
         
-        self.bgFrame = CGRect.init(x: bounds.origin.x - diffRotLength, y: bounds.origin.y - diffRotLength, width: bounds.size.width + diffRotLength * 2, height: bounds.size.height + diffRotLength * 2)
+        _bgFrame = CGRect.init(x: bounds.origin.x - _diffRotLength,
+                               y: bounds.origin.y - _diffRotLength,
+                               width: bounds.size.width + _diffRotLength * 2,
+                               height: bounds.size.height + _diffRotLength * 2)
         
         if maskType != .normal {
-            let blurContentView = UIView.init(frame: bgFrame)
+            let blurContentView = UIView.init(frame: _bgFrame)
             self.addSubview(blurContentView)
             self.blurContentView = blurContentView
             
@@ -499,40 +644,43 @@ class DXImageResizerFrameView: UIView {
             bgLayer.fillColor = UIColor.black.cgColor
             blurContentView.layer.mask = bgLayer
             self.bgLayer = bgLayer
-            
-            
+
         } else {
             self.bgLayer = self.createShapeLayer(lineWidth: 0)
         }
         self.bgLayer?.fillRule = .evenOdd
         
-        let frameLayer = self.createShapeLayer(lineWidth: 0)
+        let frameLayer = self.createShapeLayer(lineWidth: 1)
         frameLayer.fillColor = UIColor.clear.cgColor
         self.frameLayer = frameLayer
         
         self.borderStyle = borderStyle
+        updateBorderStyle()
         self.animationCurve = animationCurve
+        updateAnimationCure()
         self.scrollView = scrollView
         self.imageView = imageView
         
         self.maskAlpha = maskAlpha
         self.fillColor = fillColor
         self.strokeColor = strokeColor
+        updateStrokeColor()
         
         // ??
         if resizeWHScale == self.resizeWHScale {
-            self.resizeWHScale = resizeWHScale - 1.0
+            _resizeWHScale = resizeWHScale - 1.0
         }
         self.resizeWHScale = resizeWHScale
+        setResizeWHScale(resizeWHScale: resizeWHScale, animated: false)
         
         let pan = UIPanGestureRecognizer.init(target: self, action: #selector(panHandle(pan:)))
         self.addGestureRecognizer(pan)
         self.panGR = pan
-
     }
     
     // MARK: life cycle
     override func didMoveToSuperview() {
+        printLog("")
         super.didMoveToSuperview()
         if self.superview != nil {
             updateImageOriginFrameWithDirection(rotationDirection: self.rotationDirection)
@@ -540,6 +688,7 @@ class DXImageResizerFrameView: UIView {
     }
     
     deinit {
+        printLog("")
         willDie()
     }
     
@@ -552,10 +701,12 @@ extension DXImageResizerFrameView {
     
     // MARK: assist method
     func willDie() {
+        printLog("")
         self.window?.isUserInteractionEnabled = true
         _ = removeTimer()
     }
     public func createShapeLayer(lineWidth: CGFloat) -> CAShapeLayer{
+        printLog("")
         let layer = CAShapeLayer.init()
         layer.frame = self.bounds
         layer.lineWidth = lineWidth
@@ -564,20 +715,23 @@ extension DXImageResizerFrameView {
     }
     
     func isShowMidDot()-> Bool{
-        return isArbitrarily && borderStyle == .concise
+        printLog("")
+        return _isArbitrarily && borderStyle == .concise
     }
     
     func dotPath(position : CGPoint) -> UIBezierPath {
-        let dotW_H : CGFloat = dotWH / sizeScale
-        let dotPath : UIBezierPath = UIBezierPath.init(ovalIn: CGRect.init(x: position.x - dotWH * 0.5, y: position.y - dotWH * 0.5, width: dotW_H, height: dotW_H))
+        printLog("")
+        let dotW_H : CGFloat = _dotWH / sizeScale
+        let dotPath : UIBezierPath = UIBezierPath.init(ovalIn: CGRect.init(x: position.x - dotW_H * 0.5, y: position.y - dotW_H * 0.5, width: dotW_H, height: dotW_H))
         return dotPath
     }
     
     func arrPath(position: CGPoint, rectHorn: DXRectHorn) -> UIBezierPath {
+        printLog("")
         var tempPosition = position
         
-        let arrLine_W = arrLineW / sizeScale
-        let arr_Length =  arrLength / sizeScale
+        let arrLine_W = _arrLineW / sizeScale
+        let arr_Length =  _arrLength / sizeScale
         let path = UIBezierPath.init()
         let halfArrLineW = arrLine_W * 0.5
         var firstPoint = CGPoint.zero
@@ -593,7 +747,7 @@ extension DXImageResizerFrameView {
         case .leftBottom:
             tempPosition.x -= halfArrLineW
             tempPosition.y += halfArrLineW
-            firstPoint = CGPoint.init(x: tempPosition.x, y: tempPosition.y + arr_Length)
+            firstPoint = CGPoint.init(x: tempPosition.x, y: tempPosition.y - arr_Length)
             thirdPoint = CGPoint.init(x: tempPosition.x + arr_Length, y: tempPosition.y)
         case .rightTop:
             tempPosition.x += halfArrLineW
@@ -617,15 +771,16 @@ extension DXImageResizerFrameView {
     }
     
     func linePath(linePosition: DXLinePosition, location: CGPoint, length: CGFloat) -> UIBezierPath {
+        printLog("")
         let path = UIBezierPath.init()
         var point = CGPoint.zero
         switch linePosition {
         case .horizontalTop:
-            break
+            point = CGPoint.init(x: location.x + length, y: location.y)
         case .horizontalBottom:
             point = CGPoint.init(x: location.x + length, y: location.y)
         case .verticalLeft:
-            break
+            point = CGPoint.init(x: location.x, y: location.y + length)
         case .verticalRight:
             point = CGPoint.init(x: location.x, y: location.y + length)
         }
@@ -635,6 +790,7 @@ extension DXImageResizerFrameView {
     }
     /// 判断裁剪框是否完全等于原来的imageView
     func imageResizerFrameIsFullImageViewFrame() -> Bool{
+        printLog("")
         let imageResizerSize : CGSize = self.imageResizerSize()
         let imageViewSize = self.imageViewSize()
         
@@ -642,10 +798,11 @@ extension DXImageResizerFrameView {
     }
     /// 判断裁剪框是否等于原来的imageView
     func imageResizerFrameIsEqualImageViewFrame() -> Bool{
+        printLog("")
         let imageResizerSize : CGSize = self.imageResizerSize()
         let imageViewSize = self.imageViewSize()
         let resizeWHScale = (rotationDirection == .verticalUp || rotationDirection == .verticalDown) ? _resizeWHScale : (1.0 / _resizeWHScale)
-        if isArbitrarily || resizeWHScale == originWHScale {
+        if _isArbitrarily || resizeWHScale == _originWHScale {
             return abs(imageResizerSize.width - imageViewSize.width) <= 1 && abs(imageResizerSize.height - imageViewSize.height) <= 1
         }else{
             return abs(imageResizerSize.width - imageViewSize.width) <= 1 || abs(imageResizerSize.height - imageViewSize.height) <= 1
@@ -656,25 +813,26 @@ extension DXImageResizerFrameView {
     
     // MARK: private method
     internal func updateImageOriginFrameWithDirection(rotationDirection : DXImageResizerRotationDirection) {
+        printLog("")
         removeTimer()
         
-        self.baseImageW = self.imageView.bounds.size.width
-        self.baseImageH = self.imageView.bounds.size.height
-        self.verSizeScale = 1.0
-        horSizeScale = contentSize.width / self.scrollView.bounds.size.height
-        diffHalfW = (self.bounds.size.width - contentSize.width) * 0.5
-        let x : CGFloat = (self.bounds.size.width - baseImageW) * 0.5
-        let y : CGFloat = (self.bounds.size.height - baseImageH) * 0.5
-        originImageFrame = CGRect.init(x: x, y: y, width: baseImageW, height: baseImageH)
+        _baseImageW = self.imageView.bounds.size.width
+        _baseImageH = self.imageView.bounds.size.height
+        _verSizeScale = 1.0
+        _horSizeScale = _contentSize.width / self.scrollView.bounds.size.height
+        _diffHalfW = (self.bounds.size.width - _contentSize.width) * 0.5
+        let x : CGFloat = (self.bounds.size.width - _baseImageW) * 0.5
+        let y : CGFloat = (self.bounds.size.height - _baseImageH) * 0.5
+        originImageFrame = CGRect.init(x: x, y: y, width: _baseImageW, height: _baseImageH)
         updateRotationDirection(direction: rotationDirection)
         
-        updateImageResizerFrame(resizerFrame: baseImageResizerFrame(), animateDuration: TimeInterval(updateDuration))
-        updateImageResizerFrame(animateDuration: TimeInterval(updateDuration))
-        updateDuration = -1.0;
+        updateImageResizerFrame(resizerFrame: baseImageResizerFrame(), animateDuration: TimeInterval(_updateDuration))
+        updateImageResizerFrame(animateDuration: TimeInterval(_updateDuration))
+        _updateDuration = -1.0;
     }
     
     func updateImageResizerFrame(resizerFrame : CGRect,animateDuration duration: TimeInterval)  {
-        
+        printLog("")
         _imageResizerFrame = resizerFrame
         let imgResizerX : CGFloat = resizerFrame.origin.x
         let imgResizerY : CGFloat = resizerFrame.origin.y
@@ -715,7 +873,7 @@ extension DXImageResizerFrameView {
             leftTopDotPath = arrPath(position: CGPoint.init(x: imgResizerX, y: imgResizerY), rectHorn: .leftTop)
             leftBottomDotPath = arrPath(position: CGPoint.init(x: imgResizerX, y: imgResizerMaxY), rectHorn: .leftBottom)
             rightTopDotPath = arrPath(position: CGPoint.init(x: imgResizerMaxX, y: imgResizerY), rectHorn: .rightTop)
-            rightBottomDotPath = arrPath(position: CGPoint.init(x: imgResizerMaxX, y: imgResizerMaxY), rectHorn: .leftTop)
+            rightBottomDotPath = arrPath(position: CGPoint.init(x: imgResizerMaxX, y: imgResizerMaxY), rectHorn: .rightBottom)
             
             let imageResizerW : CGFloat = resizerFrame.size.width
             let imageResizerH : CGFloat = resizerFrame.size.height
@@ -726,81 +884,82 @@ extension DXImageResizerFrameView {
             horBottomLinePath = linePath(linePosition: .horizontalBottom, location: CGPoint.init(x: imgResizerX, y: imgResizerY + oneThirdH * 2), length: imageResizerW)
             verLeftLinePath = linePath(linePosition: .verticalLeft, location: CGPoint.init(x: imgResizerX + oneThirdW, y: imgResizerY), length: imageResizerH)
             verRightLinePath = linePath(linePosition: .verticalRight, location: CGPoint.init(x: imgResizerX + oneThirdW * 2, y: imgResizerY), length: imageResizerH)
-            
-            let bgPath : UIBezierPath!
-            let framePath = UIBezierPath.init(rect: resizerFrame)
-            
-            if self.blurContentView != nil {
-                bgPath = UIBezierPath.init(rect: self.blurContentView.bounds)
-                var frame = resizerFrame
-                frame.origin.x += diffRotLength
-                frame.origin.y += diffRotLength
-                bgPath.append(UIBezierPath.init(rect: frame))
-            }else{
-                bgPath = UIBezierPath.init(rect: self.bgFrame)
-                bgPath.append(framePath)
-            }
-            
-            if duration > 0 {
-                let layerPathAnimate = { (layer : CAShapeLayer, path: UIBezierPath) in
-                    let anim = CABasicAnimation.init(keyPath: "layer.path")
-                    anim.fillMode = .backwards
-                    
-                    anim.fromValue = UIBezierPath.init(cgPath: layer.path!)
-                    anim.toValue = path
-                    anim.duration = duration
-                    anim.timingFunction = CAMediaTimingFunction.init(name: CAMediaTimingFunctionName(rawValue: self.kCAMediaTimingFunction!))
-                    layer.add(anim, forKey: "path")
-                }
-                layerPathAnimate(self.leftTopDot,leftTopDotPath)
-                layerPathAnimate(self.leftBottomDot,leftBottomDotPath)
-                layerPathAnimate(self.rightTopDot,rightTopDotPath)
-                layerPathAnimate(self.rightBottomDot,rightBottomDotPath)
+        }
+        let bgPath : UIBezierPath!
+        let framePath = UIBezierPath.init(rect: resizerFrame)
+        
+        if self.blurContentView != nil {
+            bgPath = UIBezierPath.init(rect: self.blurContentView.bounds)
+            var frame = resizerFrame
+            frame.origin.x += _diffRotLength
+            frame.origin.y += _diffRotLength
+            bgPath.append(UIBezierPath.init(rect: frame))
+        }else{
+            bgPath = UIBezierPath.init(rect: _bgFrame)
+            bgPath.append(framePath)
+        }
+        
+        if duration > 0 {
+            let layerPathAnimate = { (layer : CAShapeLayer, path: UIBezierPath) in
+                let anim = CABasicAnimation.init(keyPath: "layer\(path)")
+                anim.fillMode = .backwards
                 
-                if borderStyle == .concise {
-                    layerPathAnimate(self.leftMidDot,leftMidDotPath)
-                    layerPathAnimate(self.rightMidDot,rightMidDotPath)
-                    layerPathAnimate(self.topMidDot,topMidDotPath)
-                    layerPathAnimate(self.bottomMidDot,bottomMidDotPath)
-                }else if borderStyle == .concise {
-                    layerPathAnimate(self.horTopLine,horTopLinePath)
-                    layerPathAnimate(self.horBottomLine,horBottomLinePath)
-                    layerPathAnimate(self.verLeftLine,verLeftLinePath)
-                    layerPathAnimate(self.verRightLine,verRightLinePath)
-                }
-                layerPathAnimate(self.bgLayer!, bgPath)
-                layerPathAnimate(self.frameLayer!, framePath)
-                
+                anim.fromValue = UIBezierPath.init(cgPath: layer.path!)
+                anim.toValue = path
+                anim.duration = duration
+                // anim.timingFunction = CAMediaTimingFunction.init(name: CAMediaTimingFunctionName.linear)
+                anim.timingFunction = CAMediaTimingFunction.init(name: CAMediaTimingFunctionName(rawValue: self._kCAMediaTimingFunction!))
+                layer.add(anim, forKey: "path")
             }
-            
-            CATransaction.begin()
-            CATransaction.setDisableActions(true)
-            self.leftTopDot.path = leftTopDotPath.cgPath
-            self.leftBottomDot.path = leftBottomDotPath.cgPath
-            self.rightTopDot.path = rightTopDotPath.cgPath
-            self.rightBottomDot.path = rightBottomDotPath.cgPath
+            layerPathAnimate(self.leftTopDot,leftTopDotPath)
+            layerPathAnimate(self.leftBottomDot,leftBottomDotPath)
+            layerPathAnimate(self.rightTopDot,rightTopDotPath)
+            layerPathAnimate(self.rightBottomDot,rightBottomDotPath)
             
             if borderStyle == .concise {
-                self.leftMidDot.path = leftMidDotPath.cgPath
-                self.rightMidDot.path = rightMidDotPath.cgPath
-                self.topMidDot.path = topMidDotPath.cgPath
-                self.bottomMidDot.path = bottomMidDotPath.cgPath
+                layerPathAnimate(self.leftMidDot,leftMidDotPath)
+                layerPathAnimate(self.rightMidDot,rightMidDotPath)
+                layerPathAnimate(self.topMidDot,topMidDotPath)
+                layerPathAnimate(self.bottomMidDot,bottomMidDotPath)
             }else if borderStyle == .classic {
-                self.horTopLine.path = horTopLinePath.cgPath
-                self.horBottomLine.path = horBottomLinePath.cgPath
-                self.verLeftLine.path = verLeftLinePath.cgPath
-                self.verRightLine.path = verRightLinePath.cgPath
+                layerPathAnimate(self.horTopLine,horTopLinePath)
+                layerPathAnimate(self.horBottomLine,horBottomLinePath)
+                layerPathAnimate(self.verLeftLine,verLeftLinePath)
+                layerPathAnimate(self.verRightLine,verRightLinePath)
             }
-            self.bgLayer!.path = bgPath.cgPath
-            self.frameLayer!.path = framePath.cgPath
-            CATransaction.commit()
+            layerPathAnimate(self.bgLayer!, bgPath)
+            layerPathAnimate(self.frameLayer!, framePath)
             
         }
+        
+        CATransaction.begin()
+        CATransaction.setDisableActions(true)
+        self.leftTopDot.path = leftTopDotPath.cgPath
+        self.leftBottomDot.path = leftBottomDotPath.cgPath
+        self.rightTopDot.path = rightTopDotPath.cgPath
+        self.rightBottomDot.path = rightBottomDotPath.cgPath
+        
+        if borderStyle == .concise {
+            self.leftMidDot.path = leftMidDotPath.cgPath
+            self.rightMidDot.path = rightMidDotPath.cgPath
+            self.topMidDot.path = topMidDotPath.cgPath
+            self.bottomMidDot.path = bottomMidDotPath.cgPath
+        }else if borderStyle == .classic {
+            self.horTopLine.path = horTopLinePath.cgPath
+            self.horBottomLine.path = horBottomLinePath.cgPath
+            self.verLeftLine.path = verLeftLinePath.cgPath
+            self.verRightLine.path = verRightLinePath.cgPath
+        }
+        self.bgLayer!.path = bgPath.cgPath
+        self.frameLayer!.path = framePath.cgPath
+        CATransaction.commit()
+        
     }
     
     func adjustResizeFrame() -> CGRect{
-        let resizeWHScale : CGFloat = self.isArbitrarily ? (self.imageResizeW / self.imageResizeH) : _resizeWHScale
         
+        let resizeWHScale : CGFloat = _isArbitrarily ? (self.imageResizeW / self.imageResizeH) : _resizeWHScale
+        printLog(resizeWHScale)
         var adjustResizeW : CGFloat = 0
         var adjustResizeH : CGFloat = 0
         
@@ -825,21 +984,26 @@ extension DXImageResizerFrameView {
     }
     
     func scrollViewContentInsetWithAdjustResizeFrame(adjustResizeFrame: CGRect) -> UIEdgeInsets {
+        
         // scrollView宽高跟self一样，上下左右不需要额外添加Space
         let top = adjustResizeFrame.origin.y
         let bottom = self.bounds.size.height - adjustResizeFrame.maxY
         let left = adjustResizeFrame.origin.x
         let right = self.bounds.size.width - adjustResizeFrame.maxX
-        return UIEdgeInsets.init(top: top, left: left, bottom: bottom, right: right)
+        let edge = UIEdgeInsets.init(top: top, left: left, bottom: bottom, right: right)
+        printLog(edge)
+        return edge
     }
     
     func updateImageResizerFrame(animateDuration duration: TimeInterval) {
+       
         let adjustResizeFrames = adjustResizeFrame()
+        printLog(adjustResizeFrames)
         let contentInset = scrollViewContentInsetWithAdjustResizeFrame(adjustResizeFrame: adjustResizeFrames)
-        
+        printLog(contentInset)
         // contentOffset
         var contentOffset = CGPoint.zero
-        let origin = self.imageResizerFrame.origin
+        let origin = _imageResizerFrame.origin
         let convertPoint = convert(origin, to: self.imageView)
         
         // 这个convertPoint是相对self.imageView.bounds上的点，所以要✖️zoomScale拿到相对frame实际显示的大小
@@ -884,7 +1048,7 @@ extension DXImageResizerFrameView {
         updateImageResizerFrame(resizerFrame: adjustResizeFrames, animateDuration: duration)
         
         if duration > 0 {
-            UIView.animate(withDuration: duration, delay: 0, options: self.animationOption, animations: {
+            UIView.animate(withDuration: duration, delay: 0, options: _animationOption, animations: {
                 
                 zoomBlock()
             }, completion: {(finished) in
@@ -899,21 +1063,22 @@ extension DXImageResizerFrameView {
     }
     
     func scrollViewMinZoomScaleWithResizeSize(size: CGSize) -> CGFloat {
+        printLog("")
         var minZoomScale : CGFloat = 1
         let w : CGFloat = size.width
         let h : CGFloat = size.height
         
         if w >= h {
-            minZoomScale = w / self.baseImageW
-            let imageH = self.baseImageH * minZoomScale
+            minZoomScale = w / _baseImageW
+            let imageH = _baseImageH * minZoomScale
             let trueImageH = h
             if imageH < trueImageH {
                 minZoomScale *= (trueImageH / imageH)
             }
             
         } else {
-            minZoomScale = h / self.baseImageH
-            let imageW = self.baseImageH * minZoomScale
+            minZoomScale = h / _baseImageH
+            let imageW = _baseImageH * minZoomScale
             let trueImageW = w
             if imageW < trueImageW {
                 minZoomScale *= (trueImageW / imageW)
@@ -923,28 +1088,29 @@ extension DXImageResizerFrameView {
     }
     
     func updateMaxResizeFrame(direction : DXImageResizerRotationDirection) {
+        printLog("")
         var x : CGFloat = 0
         var y : CGFloat = 0
         var w : CGFloat = 0
         var h : CGFloat = 0
         
         if direction == .verticalUp || direction == .verticalDown{
-            sizeScale = verSizeScale;
-            x = diffHalfW + horBaseMargin;
+            sizeScale = _verSizeScale;
+            x = _diffHalfW + horBaseMargin;
             y = verBaseMargin;
             w = self.bounds.size.width - 2 * x
             h = self.bounds.size.height - 2 * y
         } else {
             if isRotatedAutoScale {
-                sizeScale = horSizeScale;
+                sizeScale = _horSizeScale;
                 x = verBaseMargin / sizeScale
                 y = horBaseMargin / sizeScale
                 w = self.bounds.size.width - 2 * x
                 h = self.bounds.size.height - 2 * y
             } else {
-                sizeScale = verSizeScale;
-                x = (self.bounds.size.width - contentSize.height) * 0.5 +  verBaseMargin / sizeScale
-                y = (self.bounds.size.height - contentSize.width) * 0.5 + horBaseMargin / sizeScale
+                sizeScale = _verSizeScale;
+                x = (self.bounds.size.width - _contentSize.height) * 0.5 +  verBaseMargin / sizeScale
+                y = (self.bounds.size.height - _contentSize.width) * 0.5 + horBaseMargin / sizeScale
                 w = self.bounds.size.width - 2 * x
                 h = self.bounds.size.height - 2 * y
             }
@@ -953,7 +1119,7 @@ extension DXImageResizerFrameView {
         frameLayer!.lineWidth = 1.0 / sizeScale
         var lineW : CGFloat = 0
         if borderStyle == .classic {
-            lineW = arrLineW / sizeScale
+            lineW = _arrLineW / sizeScale
         }
         
         leftTopDot.lineWidth = lineW;
@@ -970,6 +1136,7 @@ extension DXImageResizerFrameView {
     }
     
     func checkIsCanRecovery() {
+        printLog("")
         let isVerticalityMirrors = self.isVerticalityMirror?()  ?? false
         let isHorizontalMirrors = self.isHorizontalMirror?()  ?? false
         if isVerticalityMirrors || isHorizontalMirrors {
@@ -977,7 +1144,7 @@ extension DXImageResizerFrameView {
             return
         }
         
-        let convertCenter = convert(CGPoint.init(x: self.bounds.midX, y: self.bounds.midY), to: self.imageView)
+        let convertCenter = self.convert(CGPoint.init(x: self.bounds.midX, y: self.bounds.midY), to: self.imageView)
         let imageViewCenter = CGPoint.init(x: self.imageView.bounds.midX, y: self.imageView.bounds.midY)
         
         let isSameCenter : Bool = labs(Int(convertCenter.x - imageViewCenter.x)) <= 1 && labs(Int(convertCenter.y - imageViewCenter.y)) <= 1
@@ -988,8 +1155,9 @@ extension DXImageResizerFrameView {
 
     
     func updateRotationDirection(direction: DXImageResizerRotationDirection) {
+        printLog("")
         updateMaxResizeFrame(direction: rotationDirection)
-        if isArbitrarily == false {
+        if _isArbitrarily == false {
             let isVer2Hor = (rotationDirection == .verticalUp || rotationDirection == .verticalDown) && (direction == .horizontalLeft || direction == .horizontalRight)
             let isHor2Ver = (direction == .verticalUp || direction == .verticalDown) && (rotationDirection == .horizontalLeft || rotationDirection == .horizontalRight)
             
@@ -1004,6 +1172,7 @@ extension DXImageResizerFrameView {
     
     
     private func createRGBAColor(color: UIColor) -> DXRGBAColor {
+        
         var r: CGFloat = 0
         var g: CGFloat = 0
         var b: CGFloat = 0
@@ -1016,10 +1185,12 @@ extension DXImageResizerFrameView {
         let aInt = Int(a * 255)
         
         let rgba : DXRGBAColor = DXRGBAColor.init(dx_r: CGFloat(rInt), dx_g: CGFloat(gInt), dx_b: CGFloat(bInt), dx_a:CGFloat( aInt))
+        printLog(rgba)
         return rgba
     }
-    
+    @discardableResult
     func addTimer() -> Bool{
+        printLog("")
         let isHasTimer = removeTimer()
         self.timer = Timer.scheduledTimer(timeInterval: 0.65, target: self, selector: #selector(timerHandle), userInfo: nil, repeats: false)
         RunLoop.main.add(self.timer!, forMode: RunLoop.Mode.common)
@@ -1027,11 +1198,13 @@ extension DXImageResizerFrameView {
     }
     
     @objc func timerHandle() {
-         _ = removeTimer()
-        updateImageResizerFrame(animateDuration: TimeInterval(self.defaultDuration))
+        printLog("")
+        removeTimer()
+        updateImageResizerFrame(animateDuration: TimeInterval(_defaultDuration))
     }
     @discardableResult
     func removeTimer() -> Bool{
+        printLog("")
         if self.timer != nil {
             timer?.invalidate()
             timer = nil
@@ -1041,12 +1214,12 @@ extension DXImageResizerFrameView {
     }
 
     func hideOrShowBlurEffect(isHiden : Bool, animationDuration duration: TimeInterval) {
-        
-        if maskType == .normal || isHideBlurEffect == isHiden{
+        printLog("")
+        if maskType == .normal || _isHideBlurEffect == isHiden{
             return
         }
         
-        self.isHideBlurEffect = isHiden
+        _isHideBlurEffect = isHiden
         let toOpacity : CGFloat = isHiden ? 0 : 1
         
         if (duration > 0 && self.blurContentView != nil) || (self.blurContentView == nil && imageResizerFrameIsFullImageViewFrame() == false){
@@ -1057,7 +1230,7 @@ extension DXImageResizerFrameView {
             anim.fromValue = fromOpacity
             anim.toValue = toOpacity
             anim.duration = duration
-            anim.timingFunction = CAMediaTimingFunction.init(name: CAMediaTimingFunctionName(rawValue: self.kCAMediaTimingFunction!))
+            anim.timingFunction = CAMediaTimingFunction.init(name: CAMediaTimingFunctionName(rawValue: _kCAMediaTimingFunction!))
             self.blurEffectView.layer.add(anim, forKey: "opacity")
             
             CATransaction.begin()
@@ -1069,13 +1242,14 @@ extension DXImageResizerFrameView {
     
     /// 是否显示边框
     func hideOrShowBorderLine(isHiden : Bool, animationDuration duration: TimeInterval) {
-        if borderStyle == .classic || isHideFrameLine == isHiden{
+        printLog(isHiden)
+        if borderStyle == .classic || _isHideFrameLine == isHiden{
             return
         }
         
-        self.isHideFrameLine = isHiden
+        _isHideFrameLine = isHiden
         let toOpacity : Float = isHiden ? 0 : 1
-        
+        printLog(isHiden)
         if duration > 0 {
             let fromOpacity : CGFloat = isHiden ? 1 : 0
             
@@ -1084,7 +1258,7 @@ extension DXImageResizerFrameView {
             anim.fromValue = fromOpacity
             anim.toValue = toOpacity
             anim.duration = duration
-            anim.timingFunction = CAMediaTimingFunction.init(name: CAMediaTimingFunctionName(rawValue: self.kCAMediaTimingFunction!))
+            anim.timingFunction = CAMediaTimingFunction.init(name: CAMediaTimingFunctionName(rawValue: _kCAMediaTimingFunction!))
             self.horTopLine.add(anim, forKey: "opacity")
             self.horBottomLine.add(anim, forKey: "opacity")
             self.verLeftLine.add(anim, forKey: "opacity")
@@ -1092,7 +1266,9 @@ extension DXImageResizerFrameView {
             
             CATransaction.begin()
             CATransaction.setDisableActions(true)
-            self.blurEffectView.layer.opacity = toOpacity
+            if self.blurEffectView != nil {
+                self.blurEffectView.layer.opacity = toOpacity
+            }
             self.horTopLine.opacity = toOpacity
             self.horBottomLine.opacity = toOpacity
             self.verLeftLine.opacity = toOpacity
@@ -1102,21 +1278,22 @@ extension DXImageResizerFrameView {
     }
     
     func baseImageResizerFrame() ->CGRect {
-        if isArbitrarily {
+        printLog("")
+        if _isArbitrarily {
             return self.originImageFrame
         }else{
             var w : CGFloat = 0
             var h : CGFloat = 0
             
-            if self.baseImageW >= self.baseImageH {
-                h = self.baseImageH
+            if _baseImageW >= _baseImageH {
+                h = _baseImageH
                 w = h * _resizeWHScale
                 if w > self.maxResizeW() {
                     w = self.maxResizeW()
                     h = w / _resizeWHScale
                 }
             }else{
-                w = self.baseImageW
+                w = _baseImageW
                 h = w / _resizeWHScale
                 if h > self.maxResizeH() {
                     h = self.maxResizeH()

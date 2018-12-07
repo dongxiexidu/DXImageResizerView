@@ -27,17 +27,14 @@ class DXImageResizerView: UIView {
     }
     
     /// 边框样式
-    var borderStyle : DXImageResizerBorderStyle = .concise{
-//        get{
-//            return self.frameView.borderStyle
-//        }
-//        set{
-//            self.frameView.updateBorderType(borderType:borderStyle)
-//        }
-        didSet{
-            frameView.updateBorderType(borderType:borderStyle)
+    var borderStyle : DXImageResizerBorderStyle{
+        get{
+            return self.frameView.borderStyle
         }
-        
+        set (newValue){
+            printLog(newValue)
+            self.frameView.updateBorderType(borderType:newValue)
+        }
     }
     
     internal var frameView: DXImageResizerFrameView!
@@ -51,6 +48,7 @@ class DXImageResizerView: UIView {
         }
         
         set{
+            printLog("")
             if frameView != nil {
                 frameView.animationCurve = animationCurve
             }
@@ -70,23 +68,35 @@ class DXImageResizerView: UIView {
     
     /// 裁剪的图片
     var resizeImage : UIImage!{
+        
         didSet{
+            printLog("")
             self.imageView.image = resizeImage
             updateSubviewLayouts()
         }
+        
+//        get{
+//            return self.imageView.image!
+//        }
+//        set{
+//            printLog("")
+//            self.imageView.image = resizeImage
+//            updateSubviewLayouts()
+//        }
     }
     
     /// 裁剪线颜色
-    var strokeColor : UIColor = UIColor.white{
-//        get{
-//            return frameView.strokeColor
-//        }
-//        set{
-//            frameView.strokeColor = strokeColor
-//        }
-        didSet{
+    var strokeColor : UIColor {
+        get{
+            return frameView.strokeColor
+        }
+        set{
+            printLog("")
             frameView.strokeColor = strokeColor
         }
+//        didSet{
+//            frameView.strokeColor = strokeColor
+//        }
         
     }
     
@@ -97,10 +107,11 @@ class DXImageResizerView: UIView {
             return _bgColor
         }
         set{
+            printLog("")
             if bgColor == UIColor.clear {
-                _bgColor = bgColor
+                _bgColor = UIColor.black
             }
-            self.backgroundColor = bgColor
+            self.backgroundColor = _bgColor
             if frameView != nil {
                 frameView.fillColor = bgColor
             }
@@ -108,31 +119,39 @@ class DXImageResizerView: UIView {
     }
     
     /// 遮罩颜色的透明度（背景颜色 * 透明度）
-    var maskAlpha : CGFloat = 0.5{
-//        get {
-//            return frameView.maskAlpha
-//        }
-//        set{
-//            if frameView != nil {
-//                frameView.maskAlpha = maskAlpha
-//            }
-//        }
-        didSet{
+    var maskAlpha : CGFloat{
+        get {
+            if frameView != nil {
+                return 0.5
+            }
+            return frameView.maskAlpha
+        }
+        set{
+            printLog("")
             if frameView != nil {
                 frameView.maskAlpha = maskAlpha
             }
         }
+//        didSet{
+//            if frameView != nil {
+//                frameView.maskAlpha = maskAlpha
+//            }
+//        }
         
     }
     
     // 裁剪宽高比（0则为任意比例，可控8个方向，固定比例为4个方向）
     var resizeWHScale : CGFloat = 0{
 //        get {
+//            if frameView != nil {
+//                return 0
+//            }
 //            return frameView.resizeWHScale
 //        }
-//        set{
+//        set(value){
+//            printLog("")
 //            if frameView != nil {
-//                frameView.setResizeWHScale(resizeWHScale: resizeWHScale, animated: true)
+//                frameView.setResizeWHScale(resizeWHScale: value, animated: true)
 //            }
 //        }
         
@@ -146,6 +165,7 @@ class DXImageResizerView: UIView {
     /// 裁剪图片与裁剪区域的垂直边距
     var verBaseMargin : CGFloat = 0 {
         didSet{
+            printLog("")
             updateSubviewLayouts()
         }
     }
@@ -153,6 +173,7 @@ class DXImageResizerView: UIView {
     /// 裁剪图片与裁剪区域的水平边距
     var horBaseMargin : CGFloat = 0 {
         didSet{
+            printLog("")
             updateSubviewLayouts()
         }
     }
@@ -160,6 +181,7 @@ class DXImageResizerView: UIView {
     /// 是否顺时针旋转（默认逆时针）
     var isClockwiseRotation : Bool = false{
         didSet{
+            printLog("")
             if _isClockwiseRotation == isClockwiseRotation {
                 return
             }
@@ -173,21 +195,23 @@ class DXImageResizerView: UIView {
         }
     }
     /// 是否锁定裁剪区域（锁定后无法拖动裁剪区域）
-    var isLockResizeFrame : Bool = false{
-//        get{
-//            return !self.frameView.panGR.isEnabled
-//        }
-//        set{
-//            self.frameView.panGR.isEnabled = !isLockResizeFrame
-//        }
-        didSet{
-            frameView.panGR.isEnabled = !isLockResizeFrame
+    var isLockResizeFrame : Bool {
+        get{
+            return !self.frameView.panGR.isEnabled
         }
+        set{
+            printLog("")
+            self.frameView.panGR.isEnabled = !isLockResizeFrame
+        }
+//        didSet{
+//            frameView.panGR.isEnabled = !isLockResizeFrame
+//        }
         
     }
     /// 旋转后，是否自动缩放至合适尺寸（默认当图片的宽度比高度小时为YES）
     var isRotatedAutoScale : Bool = true{
         didSet{
+            printLog("")
             if frameView != nil {
                 frameView.isRotatedAutoScale = isRotatedAutoScale
             }
@@ -197,14 +221,18 @@ class DXImageResizerView: UIView {
     /// 垂直镜像，沿着Y轴旋转180°
     var verticalityMirror : Bool = false{
         didSet{
+            printLog("")
             setVerticalityMirror(verticalMirror: verticalityMirror, animated: false)
         }
     }
     
-    /// 垂直镜像，沿着Y轴旋转180°
+    
+   // var _horizontalMirror : Bool = false
+    /// 水平镜像，沿着X轴旋转180°
     var horizontalMirror : Bool = false{
         didSet{
-            setVerticalityMirror(verticalMirror: verticalityMirror, animated: false)
+            printLog("")
+            setHorizontalMirror(horizontalMirror: horizontalMirror, animated: false)
         }
     }
     
@@ -217,9 +245,11 @@ class DXImageResizerView: UIView {
     internal var _contentSize : CGSize = .zero
     
     private func setResizeWHScale(resizeWHScale : CGFloat, animated: Bool) {
+        printLog("")
         self.frameView.setResizeWHScale(resizeWHScale: resizeWHScale, animated: animated)
     }
     private func setVerticalityMirror(verticalMirror : Bool) {
+        printLog("")
         setVerticalityMirror(verticalMirror: verticalMirror, animated: false)
     }
     
@@ -272,17 +302,18 @@ extension DXImageResizerView {
                      contentInsets : UIEdgeInsets,
                      imageResizerIsCanRecovery: @escaping DXImageResizerIsCanRecoveryBlock,
                      imageResizerIsPrepareToScale : @escaping DXImageResizerIsPrepareToScaleBlock) {
-        
+        printLog("")
         self.init(frame: frame)
         
         self.verBaseMargin = verBaseMargin
         self.horBaseMargin = horBaseMargin
+        updateSubviewLayouts()
         self._contentInsets = contentInsets
         let width : CGFloat = self.bounds.size.width - _contentInsets.left - _contentInsets.right
         let height : CGFloat = self.bounds.size.height - _contentInsets.top - _contentInsets.bottom
         _contentSize = CGSize.init(width: width, height: height)
         if maskType == .lightBlur {
-            self.bgColor = UIColor.white
+            self.bgColor = UIColor.black
         } else if maskType == .darkBlur {
             self.bgColor = UIColor.black
         } else {
@@ -303,6 +334,7 @@ extension DXImageResizerView {
     }
     
     func setupBase() {
+        printLog("")
         self.clipsToBounds = true
         self.autoresizingMask = UIView.AutoresizingMask.init(rawValue: 0)
         let array = [DXImageResizerRotationDirection.verticalUp,
@@ -314,12 +346,14 @@ extension DXImageResizerView {
     }
     // MARK: setup scrollView
     func setupScorllView()  {
+        printLog("")
         let h = _contentSize.height;
         let w = h * h / _contentSize.width;
         let x = _contentInsets.left + (self.bounds.size.width - w) * 0.5;
         let y = _contentInsets.top;
         let scrollView = UIScrollView.init()
         scrollView.frame = CGRect.init(x: x, y: y, width: w, height: h)
+        printLog(scrollView.frame)
         scrollView.delegate = self;
         scrollView.minimumZoomScale = 1.0;
         scrollView.maximumZoomScale = CGFloat(MAXFLOAT)
@@ -338,6 +372,7 @@ extension DXImageResizerView {
     
     
     func setupImageView(image: UIImage) {
+        printLog("")
         let width : CGFloat = self.frame.size.width - _contentInsets.left - _contentInsets.right
         let height : CGFloat = self.frame.size.height - _contentInsets.top - _contentInsets.bottom
         let maxW : CGFloat = width - 2 * self.horBaseMargin
@@ -352,6 +387,7 @@ extension DXImageResizerView {
         
         let imageView = UIImageView.init(image: image)
         imageView.frame = CGRect.init(x: 0, y: 0, width: w, height: h)
+        printLog(imageView.frame)
         imageView.isUserInteractionEnabled = true
         self.scrollView.addSubview(imageView)
         self.imageView = imageView
@@ -375,7 +411,7 @@ extension DXImageResizerView {
                         resizeWHScale: CGFloat,
                         isCanRecoveryBlock: @escaping DXImageResizerIsCanRecoveryBlock,
                         isPrepareToScaleBlock : @escaping DXImageResizerIsPrepareToScaleBlock){
-        
+        printLog("")
         let frameView = DXImageResizerFrameView.init(frame: self.scrollView.frame,
                                                      contentSize: _contentSize,
                                                      maskType: maskType,
@@ -393,6 +429,7 @@ extension DXImageResizerView {
         
         
         frameView.isRotatedAutoScale = self.isRotatedAutoScale
+        frameView.updateIsRotatedAutoScale()
         frameView.isVerticalityMirror = { [weak self] in
             guard let self = self else { return false}
             
@@ -412,24 +449,29 @@ extension DXImageResizerView {
 // MARK: UIScrollViewDelegate
 extension DXImageResizerView : UIScrollViewDelegate {
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        printLog("")
         self.frameView.startImageResizer()
     }
     
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        printLog("")
         if !decelerate {
             self.scrollViewDidEndDecelerating(scrollView)
         }
     }
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        self.frameView.endedImageResizer()
+        printLog("")
+       // self.frameView.endedImageResizer()
     }
     
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
+        printLog("")
         return self.imageView
     }
     
     func scrollViewWillBeginZooming(_ scrollView: UIScrollView, with view: UIView?) {
+        printLog("")
         self.frameView.startImageResizer()
     }
     
@@ -438,27 +480,32 @@ extension DXImageResizerView : UIScrollViewDelegate {
 // MARK: private method
 extension DXImageResizerView {
     
-    internal func updateSubviewLayouts() {
+    public func updateSubviewLayouts() {
+        printLog("")
         self.directionIndex = 0
-        self.scrollView.layer.transform = CATransform3DIdentity
-        self.scrollView.minimumZoomScale = 1.0
-        self.scrollView.zoomScale = self.scrollView.minimumZoomScale
-        
-        let maxW : CGFloat = self.frame.size.width - 2 * self.horBaseMargin
-        let maxH : CGFloat = self.frame.size.height - 2 * self.verBaseMargin
-        let whScale : CGFloat = self.imageView.image!.size.width / self.imageView.image!.size.height
-        var w : CGFloat = maxW
-        var h : CGFloat = w / whScale
-        if h > maxH {
-            h = maxH
-            w = h * whScale
+        if let tmpScrollView = scrollView {
+            tmpScrollView.layer.transform = CATransform3DIdentity
+            tmpScrollView.minimumZoomScale = 1.0
+            tmpScrollView.zoomScale = self.scrollView.minimumZoomScale
+            
+            let maxW : CGFloat = self.frame.size.width - 2 * self.horBaseMargin
+            let maxH : CGFloat = self.frame.size.height - 2 * self.verBaseMargin
+            let whScale : CGFloat = self.imageView.image!.size.width / self.imageView.image!.size.height
+            var w : CGFloat = maxW
+            var h : CGFloat = w / whScale
+            if h > maxH {
+                h = maxH
+                w = h * whScale
+            }
+            self.imageView.frame = CGRect.init(x: 0, y: 0, width: w, height: h)
+            let verticalInset = (self.scrollView.bounds.size.height - h) * 0.5
+            let horizontalInset = (self.scrollView.bounds.size.width - w) * 0.5
+            self.scrollView.contentSize = self.imageView.bounds.size
+            self.scrollView.contentInset = .init(top: verticalInset, left: horizontalInset, bottom: verticalInset, right: horizontalInset)
+            self.scrollView.contentOffset = CGPoint.init(x: -horizontalInset, y: -verticalInset)
         }
-        self.imageView.frame = CGRect.init(x: 0, y: 0, width: w, height: h)
-        let verticalInset = (self.scrollView.bounds.size.height - h) * 0.5
-        let horizontalInset = (self.scrollView.bounds.size.width - w) * 0.5
-        self.scrollView.contentSize = self.imageView.bounds.size
-        self.scrollView.contentInset = .init(top: verticalInset, left: horizontalInset, bottom: verticalInset, right: horizontalInset)
-        self.scrollView.contentOffset = CGPoint.init(x: -horizontalInset, y: -verticalInset)
-        self.frameView.updateImageResizerFrameWithVerBaseMargin(verBaseMargin: self.verBaseMargin, horBaseMargin: self.horBaseMargin)
+        if let tempView = frameView {
+            tempView.updateImageResizerFrameWithVerBaseMargin(verBaseMargin: self.verBaseMargin, horBaseMargin: self.horBaseMargin)
+        }
     }
 }

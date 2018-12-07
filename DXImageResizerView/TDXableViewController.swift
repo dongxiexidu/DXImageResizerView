@@ -20,7 +20,9 @@ class TDXableViewController: UITableViewController {
         let contentInsets : UIEdgeInsets = .init(top: 50, left: 0, bottom: (40 + 30 + 30 + 10), right: 0)
         let title1 = "默认样式"
         let configure1 = DXImageResizerConfigure.defaultConfigure(resizeImage: image!) { (configure) in
-            configure.dx.contentInsets(contentInsets: contentInsets)
+            configure.dx
+            .contentInsets(contentInsets: contentInsets)
+            .maskType(maskType: .normal)
         }
         
         let title2 = "深色毛玻璃遮罩"
