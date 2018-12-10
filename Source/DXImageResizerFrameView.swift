@@ -256,7 +256,7 @@ class DXImageResizerFrameView: UIView {
     }
     
     
-    var _fillColor : UIColor = UIColor.white
+    var _fillColor : UIColor = UIColor.black
     ///
     var fillColor : UIColor {
         get{
@@ -269,17 +269,17 @@ class DXImageResizerFrameView: UIView {
             } else if maskType == .darkBlur {
                 _fillColor = UIColor.black
             }
-            _fillRgba = self.createRGBAColor(color: fillColor)
+            _fillRgba = self.createRGBAColor(color: _fillColor)
             _fillColor = UIColor.init(red: _fillRgba.dx_r, green: _fillRgba.dx_g, blue: _fillRgba.dx_b, alpha: _fillRgba.dx_a * maskAlpha)
             
             _clearColor = UIColor.init(red: _fillRgba.dx_r, green: _fillRgba.dx_g, blue: _fillRgba.dx_b, alpha: 0)
             
             if blurContentView != nil {
-                blurContentView.backgroundColor = fillColor
+                blurContentView.backgroundColor = _fillColor
             } else {
                 CATransaction.begin()
                 CATransaction.setDisableActions(true)
-                bgLayer?.fillColor = fillColor.cgColor
+                bgLayer?.fillColor = _fillColor.cgColor
                 CATransaction.commit()
             }
             
@@ -430,12 +430,12 @@ class DXImageResizerFrameView: UIView {
     var _isRotatedAutoScale : Bool = false
     ///
     var isRotatedAutoScale : Bool = false{
-        didSet{
+        didSet (newValue){
             printLog("")
-            if _isRotatedAutoScale == isRotatedAutoScale {
+            if _isRotatedAutoScale == newValue {
                 return
             }
-            _isRotatedAutoScale = isRotatedAutoScale
+            _isRotatedAutoScale = newValue
             if self.superview != nil {
                 updateMaxResizeFrame(direction: self.rotationDirection)
             }
@@ -959,7 +959,7 @@ extension DXImageResizerFrameView {
     func adjustResizeFrame() -> CGRect{
         
         let resizeWHScale : CGFloat = _isArbitrarily ? (self.imageResizeW / self.imageResizeH) : _resizeWHScale
-        printLog(resizeWHScale)
+        printLog(resizeWHScale) // 1.3333333333333333
         var adjustResizeW : CGFloat = 0
         var adjustResizeH : CGFloat = 0
         
@@ -980,7 +980,10 @@ extension DXImageResizerFrameView {
         }
         let adjustResizeX = self.maxResizeX() + (self.maxResizeW() - adjustResizeW) * 0.5
         let adjustResizeY = self.maxResizeY() + (self.maxResizeH() - adjustResizeH) * 0.5
-        return CGRect.init(x: adjustResizeX, y: adjustResizeY, width: adjustResizeW, height: adjustResizeH)
+        
+        let rect = CGRect.init(x: adjustResizeX, y: adjustResizeY, width: adjustResizeW, height: adjustResizeH)
+        printLog(rect) // (165.23200000000003, 120.375, 355.0, 266.25)
+        return rect;
     }
     
     func scrollViewContentInsetWithAdjustResizeFrame(adjustResizeFrame: CGRect) -> UIEdgeInsets {
@@ -1088,7 +1091,7 @@ extension DXImageResizerFrameView {
     }
     
     func updateMaxResizeFrame(direction : DXImageResizerRotationDirection) {
-        printLog("")
+        printLog(direction)
         var x : CGFloat = 0
         var y : CGFloat = 0
         var w : CGFloat = 0
@@ -1107,7 +1110,7 @@ extension DXImageResizerFrameView {
                 y = horBaseMargin / sizeScale
                 w = self.bounds.size.width - 2 * x
                 h = self.bounds.size.height - 2 * y
-            } else {
+            } else {// 第一旋转走这里
                 sizeScale = _verSizeScale;
                 x = (self.bounds.size.width - _contentSize.height) * 0.5 +  verBaseMargin / sizeScale
                 y = (self.bounds.size.height - _contentSize.width) * 0.5 + horBaseMargin / sizeScale
@@ -1155,8 +1158,8 @@ extension DXImageResizerFrameView {
 
     
     func updateRotationDirection(direction: DXImageResizerRotationDirection) {
-        printLog("")
-        updateMaxResizeFrame(direction: rotationDirection)
+        printLog(direction)
+        updateMaxResizeFrame(direction: direction)
         if _isArbitrarily == false {
             let isVer2Hor = (rotationDirection == .verticalUp || rotationDirection == .verticalDown) && (direction == .horizontalLeft || direction == .horizontalRight)
             let isHor2Ver = (direction == .verticalUp || direction == .verticalDown) && (rotationDirection == .horizontalLeft || rotationDirection == .horizontalRight)
@@ -1165,8 +1168,8 @@ extension DXImageResizerFrameView {
                 _resizeWHScale = 1.0 / _resizeWHScale
             }
         }
-        self.rotationDirection = direction
-        
+        rotationDirection = direction
+        printLog(direction)
     }
     
     
@@ -1179,12 +1182,8 @@ extension DXImageResizerFrameView {
         var a: CGFloat = 0
         
         color.getRed(&r, green: &g, blue: &b, alpha: &a)
-        let rInt = Int(r * 255) << 24
-        let gInt = Int(g * 255) << 16
-        let bInt = Int(b * 255) << 8
-        let aInt = Int(a * 255)
-        
-        let rgba : DXRGBAColor = DXRGBAColor.init(dx_r: CGFloat(rInt), dx_g: CGFloat(gInt), dx_b: CGFloat(bInt), dx_a:CGFloat( aInt))
+
+        let rgba : DXRGBAColor = DXRGBAColor.init(dx_r: r, dx_g: g, dx_b: b, dx_a:a)
         printLog(rgba)
         return rgba
     }

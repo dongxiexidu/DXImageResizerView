@@ -152,7 +152,7 @@ extension DXImageResizerFrameView{
         let scale = imageWidth / self.imageView.bounds.size.width
         
         let cropFrame = (self.isCanRecovery || self.resizeWHScale > 0) ? convert(self.imageResizerFrame, to: self.imageView) : self.imageView.bounds
-       // let deviceScale = UIScreen.main.scale
+
         
         if referenceWidths > 0 {
             let maxWidth = max(imageWidth, self.imageView.bounds.size.width)
@@ -223,7 +223,7 @@ extension DXImageResizerFrameView{
             }
             
             // 有小数的情况下，边界会多出白线，需要把小数点去掉
-            let cropScale = imageWidth / referenceWidth
+            let cropScale = imageWidth / referenceWidths
             let cropSize : CGSize = CGSize.init(width: resizedImage.size.width / cropScale, height: resizedImage.size.height / cropScale)
             /**
              * 参考：http://www.jb51.net/article/81318.htm
@@ -231,12 +231,16 @@ extension DXImageResizerFrameView{
              - 1.CGContextTranslateCTM(context, 0, cropSize.height);
              - 2.CGContextScaleCTM(context, 1, -1);
              */
-            UIGraphicsBeginImageContext(cropSize)
+
+            
+            let deviceScale = UIScreen.main.scale
+            UIGraphicsBeginImageContextWithOptions(cropSize, false, deviceScale)
             let ctx = UIGraphicsGetCurrentContext()
             ctx?.translateBy(x: 0, y: cropSize.height)
             ctx?.scaleBy(x: 1, y: -1)
             ctx?.draw(resizedImage.cgImage!, in: CGRect.init(x: 0, y: 0, width: cropSize.width, height: cropSize.height))
             let newImg = UIGraphicsGetImageFromCurrentImageContext()
+            UIGraphicsEndImageContext()
             DispatchQueue.main.async {
                 completion?(newImg)
             }

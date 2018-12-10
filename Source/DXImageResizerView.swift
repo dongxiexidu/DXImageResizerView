@@ -210,10 +210,10 @@ class DXImageResizerView: UIView {
     }
     /// 旋转后，是否自动缩放至合适尺寸（默认当图片的宽度比高度小时为YES）
     var isRotatedAutoScale : Bool = true{
-        didSet{
+        didSet (newValue){
             printLog("")
             if frameView != nil {
-                frameView.isRotatedAutoScale = isRotatedAutoScale
+                frameView.isRotatedAutoScale = newValue
             }
         }
     }
